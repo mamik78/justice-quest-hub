@@ -2,7 +2,7 @@
 import { useUser } from "../contexts/UserContext";
 import { avatars } from "../data/quizData";
 import { Link, useLocation } from "react-router-dom";
-import { Home, BookOpen, User, BarChart3 } from "lucide-react";
+import { Home, BookOpen, User, BarChart3, Briefcase } from "lucide-react";
 
 const Header = () => {
   const { username, selectedAvatar, points } = useUser();
@@ -25,7 +25,7 @@ const Header = () => {
             <div className="flex items-center justify-center w-10 h-10 bg-justice-primary text-white rounded-full">
               <span className="text-xl font-bold">C</span>
             </div>
-            <h1 className="text-xl font-bold text-justice-primary sm:text-2xl">C-Justice-Web</h1>
+            <h1 className="text-xl font-bold text-justice-primary sm:text-2xl">C Justice SAUJ</h1>
           </Link>
           
           {username ? (
@@ -57,6 +57,9 @@ const Header = () => {
               </Link>
               <Link to="/quiz" className={getNavLinkClass("/quiz")}>
                 <BookOpen size={18} className="mr-1" /> Quiz
+              </Link>
+              <Link to="/metiers" className={getNavLinkClass("/metiers")}>
+                <Briefcase size={18} className="mr-1" /> Métiers
               </Link>
               <Link to="/dashboard" className={getNavLinkClass("/dashboard")}>
                 <BarChart3 size={18} className="mr-1" /> Tableau de bord

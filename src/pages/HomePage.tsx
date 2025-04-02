@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 import { badges } from "../data/quizData";
+import JusticeAI from "../components/JusticeAI";
 
 const HomePage = () => {
   const { username, earnedBadges, points, categoryScores } = useUser();
@@ -58,8 +59,11 @@ const HomePage = () => {
             </div>
           </div>
           
+          {/* Composant IA Assistant Justice */}
+          <JusticeAI />
+          
           {userBadges.length > 0 && (
-            <div className="bg-white rounded-xl shadow-md p-6 mb-8 animate-fade-in">
+            <div className="bg-white rounded-xl shadow-md p-6 mt-8 animate-fade-in">
               <h2 className="text-xl font-bold mb-4">Vos badges</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 {userBadges.map(badge => (
@@ -78,7 +82,7 @@ const HomePage = () => {
             <div className="flex items-center justify-center w-20 h-20 mx-auto bg-justice-primary text-white rounded-full mb-4">
               <span className="text-4xl font-bold">C</span>
             </div>
-            <h1 className="text-4xl font-bold text-justice-primary mb-4">C-Justice-Web</h1>
+            <h1 className="text-4xl font-bold text-justice-primary mb-4">C Justice SAUJ</h1>
             <p className="text-xl max-w-2xl mx-auto mb-6 text-gray-700">
               Découvre le monde de la justice de façon ludique avec des quiz interactifs !
             </p>
@@ -105,6 +109,11 @@ const HomePage = () => {
           <Link to="/onboarding" className="btn-primary text-lg px-8 py-3">
             Commencer l'aventure
           </Link>
+          
+          {/* Composant IA pour les non-inscrits aussi */}
+          <div className="w-full mt-10">
+            <JusticeAI />
+          </div>
         </div>
       )}
     </div>

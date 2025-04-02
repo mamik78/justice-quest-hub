@@ -16,10 +16,13 @@ const ProfilePage = () => {
     earnedBadges, 
     resetProgress,
     feedbackGiven,
-    setFeedbackGiven 
+    setFeedbackGiven,
+    age,
+    setAge 
   } = useUser();
   
   const [newName, setNewName] = useState(username);
+  const [newAge, setNewAge] = useState(age || "");
   const [showConfirmReset, setShowConfirmReset] = useState(false);
   const [feedback, setFeedback] = useState("");
   
@@ -34,6 +37,7 @@ const ProfilePage = () => {
   const handleSaveProfile = () => {
     if (newName.trim()) {
       setUsername(newName.trim());
+      setAge(newAge);
       toast.success("Profil mis à jour !");
     }
   };
@@ -53,6 +57,16 @@ const ProfilePage = () => {
       toast.success("Merci pour votre retour !");
     }
   };
+
+  // Options pour les niveaux scolaires
+  const niveauOptions = [
+    "6ème",
+    "5ème",
+    "4ème",
+    "3ème",
+    "Seconde",
+    "Autre"
+  ];
 
   return (
     <div className="container mx-auto max-w-3xl px-4 py-8">
@@ -94,6 +108,25 @@ const ProfilePage = () => {
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-justice-primary focus:border-justice-primary"
                   maxLength={15}
                 />
+              </div>
+              
+              <div className="mb-4">
+                <label htmlFor="age" className="block text-sm font-medium text-gray-700 mb-1">
+                  Niveau / Classe
+                </label>
+                <select
+                  id="age"
+                  value={newAge}
+                  onChange={(e) => setNewAge(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-justice-primary focus:border-justice-primary"
+                >
+                  <option value="">Sélectionner un niveau</option>
+                  {niveauOptions.map((niveau) => (
+                    <option key={niveau} value={niveau}>
+                      {niveau}
+                    </option>
+                  ))}
+                </select>
               </div>
               
               <div className="mb-6">
@@ -154,7 +187,7 @@ const ProfilePage = () => {
       <div className="bg-white rounded-xl shadow-md p-6 animate-fade-in">
         <h2 className="text-xl font-bold mb-4">Donnez votre avis</h2>
         <p className="mb-4 text-gray-600">
-          Votre avis nous aide à améliorer C-Justice-Web pour tous les utilisateurs.
+          Votre avis nous aide à améliorer C Justice SAUJ pour tous les utilisateurs.
         </p>
         <div className="mb-4">
           <textarea
