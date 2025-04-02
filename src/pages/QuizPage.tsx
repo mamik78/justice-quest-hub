@@ -57,7 +57,7 @@ const QuizPage = () => {
       // Vérifier et attribuer des badges
       const newBadges = checkAndAwardBadges();
       
-      if (newBadges.length > 0) {
+      if (newBadges && newBadges.length > 0) {
         newBadges.forEach(badgeId => {
           const badge = badges.find(b => b.id === badgeId);
           if (badge) {

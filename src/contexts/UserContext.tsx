@@ -12,7 +12,7 @@ interface UserContextType {
   categoryScores: Record<string, number>;
   incrementCategoryScore: (category: string) => void;
   earnedBadges: string[];
-  checkAndAwardBadges: () => void;
+  checkAndAwardBadges: () => string[];
   resetProgress: () => void;
   completedQuestions: number[];
   markQuestionCompleted: (id: number) => void;
@@ -30,7 +30,7 @@ const defaultUserContext: UserContextType = {
   categoryScores: { SAUJ: 0, Justice: 0, Métiers: 0 },
   incrementCategoryScore: () => {},
   earnedBadges: [],
-  checkAndAwardBadges: () => {},
+  checkAndAwardBadges: () => [],
   resetProgress: () => {},
   completedQuestions: [],
   markQuestionCompleted: () => {},
@@ -119,7 +119,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }));
   };
 
-  const checkAndAwardBadges = () => {
+  const checkAndAwardBadges = (): string[] => {
     const newBadges = badges.filter(badge => {
       // Si on a déjà ce badge, on ne le rajoute pas
       if (earnedBadges.includes(badge.id)) return false;
