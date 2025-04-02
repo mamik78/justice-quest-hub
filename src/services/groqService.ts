@@ -56,6 +56,7 @@ export async function getHintFromGroq(question: string, answer: string = "", cor
     return data.choices[0].message.content.trim();
   } catch (error) {
     console.error("Erreur lors de la communication avec Groq:", error);
+    const isQuizHint = answer !== "" && correctAnswer !== "";
     return isQuizHint 
       ? "Indice non disponible pour le moment. Essaie de réfléchir aux principes de base du système judiciaire."
       : "Désolé, je ne peux pas répondre à ta question pour le moment. Essaie de reformuler ou de poser une autre question.";

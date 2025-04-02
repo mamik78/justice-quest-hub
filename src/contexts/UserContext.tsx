@@ -18,6 +18,8 @@ interface UserContextType {
   markQuestionCompleted: (id: number) => void;
   feedbackGiven: boolean;
   setFeedbackGiven: (value: boolean) => void;
+  age: string;
+  setAge: (age: string) => void;
 }
 
 const defaultUserContext: UserContextType = {
@@ -35,7 +37,9 @@ const defaultUserContext: UserContextType = {
   completedQuestions: [],
   markQuestionCompleted: () => {},
   feedbackGiven: false,
-  setFeedbackGiven: () => {}
+  setFeedbackGiven: () => {},
+  age: "",
+  setAge: () => {}
 };
 
 const UserContext = createContext<UserContextType>(defaultUserContext);
@@ -79,6 +83,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     return saved ? JSON.parse(saved) : false;
   });
 
+  const [age, setAge] = useState<string>(() => {
+    const saved = localStorage.getItem("age");
+    return saved || "";
+  });
+
   // Sauvegarder les valeurs dans le localStorage quand elles changent
   useEffect(() => {
     localStorage.setItem("username", username);
@@ -107,6 +116,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     localStorage.setItem("feedbackGiven", JSON.stringify(feedbackGiven));
   }, [feedbackGiven]);
+  
+  useEffect(() => {
+    localStorage.setItem("age", age);
+  }, [age]);
 
   const addPoints = (pts: number) => {
     setPoints(current => current + pts);
@@ -145,6 +158,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     setEarnedBadges([]);
     setCompletedQuestions([]);
     setFeedbackGiven(false);
+    setAge("");
   };
 
   const markQuestionCompleted = (id: number) => {
@@ -170,7 +184,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         completedQuestions,
         markQuestionCompleted,
         feedbackGiven,
-        setFeedbackGiven
+        setFeedbackGiven,
+        age,
+        setAge
       }}
     >
       {children}
