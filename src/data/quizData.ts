@@ -84,8 +84,7 @@ export const quizQuestions: QuizQuestion[] = [
     explanation: "Les greffiers sont généralement en charge de l'accueil et de l'assistance au SAUJ.",
     source: "justice.gouv.fr"
   },
-  // On ajoute quelques questions supplémentaires pour cette première version
-  // L'ensemble des 30 questions sera intégré dans une prochaine version
+  // Justice Category Questions (10)
   {
     id: 11,
     category: 'Justice',
@@ -94,10 +93,10 @@ export const quizQuestions: QuizQuestion[] = [
       { key: "A", text: "Le Conseil d'État" },
       { key: "B", text: "La Cour de cassation" },
       { key: "C", text: "La Cour d'appel" },
-      { key: "D", text: "Le tribunal correctionnel" }
+      { key: "D", text: "Le tribunal judiciaire" }
     ],
     correct: "B",
-    explanation: "La Cour de cassation est la plus haute juridiction de l'ordre judiciaire.",
+    explanation: "La Cour de cassation est la plus haute juridiction de l'ordre judiciaire français.",
     source: "justice.gouv.fr"
   },
   {
@@ -106,14 +105,57 @@ export const quizQuestions: QuizQuestion[] = [
     question: "Quel tribunal est compétent pour juger les délits ?",
     options: [
       { key: "A", text: "Le tribunal correctionnel" },
-      { key: "B", text: "Le tribunal de grande instance" },
-      { key: "C", text: "Le tribunal d'instance" },
+      { key: "B", text: "Le tribunal judiciaire" },
+      { key: "C", text: "Le tribunal de commerce" },
       { key: "D", text: "Le tribunal administratif" }
     ],
     correct: "A",
-    explanation: "Le tribunal correctionnel juge principalement les délits.",
+    explanation: "Le tribunal correctionnel juge principalement les délits, qui sont des infractions de gravité moyenne.",
     source: "service-public.fr"
   },
+  {
+    id: 13,
+    category: 'Justice',
+    question: "Depuis 2020, quel tribunal a remplacé le tribunal d'instance et le tribunal de grande instance ?",
+    options: [
+      { key: "A", text: "Le tribunal de proximité" },
+      { key: "B", text: "Le tribunal judiciaire" },
+      { key: "C", text: "Le tribunal civil" },
+      { key: "D", text: "Le tribunal départemental" }
+    ],
+    correct: "B",
+    explanation: "Le tribunal judiciaire a été créé le 1er janvier 2020 pour fusionner les tribunaux d'instance et de grande instance.",
+    source: "service-public.fr"
+  },
+  {
+    id: 14,
+    category: 'Justice',
+    question: "Quelle juridiction traite les litiges entre particuliers pour des sommes inférieures à 5000€ ?",
+    options: [
+      { key: "A", text: "Le juge des contentieux de la protection" },
+      { key: "B", text: "Le tribunal de commerce" },
+      { key: "C", text: "Le tribunal administratif" },
+      { key: "D", text: "La cour d'appel" }
+    ],
+    correct: "A",
+    explanation: "Le juge des contentieux de la protection traite les litiges de la vie quotidienne pour des sommes limitées.",
+    source: "justice.gouv.fr"
+  },
+  {
+    id: 15,
+    category: 'Justice',
+    question: "À partir de quel âge peut-on être jugé par un tribunal pour enfants ?",
+    options: [
+      { key: "A", text: "10 ans" },
+      { key: "B", text: "13 ans" },
+      { key: "C", text: "16 ans" },
+      { key: "D", text: "18 ans" }
+    ],
+    correct: "A",
+    explanation: "En France, la responsabilité pénale peut s'appliquer dès 10 ans, avec des mesures adaptées selon l'âge.",
+    source: "justice.gouv.fr"
+  },
+  // Métiers Category Questions (10)
   {
     id: 21,
     category: 'Métiers',
@@ -141,6 +183,48 @@ export const quizQuestions: QuizQuestion[] = [
     correct: "C",
     explanation: "Le notaire est le professionnel habilité à authentifier les contrats de mariage.",
     source: "service-public.fr"
+  },
+  {
+    id: 23,
+    category: 'Métiers',
+    question: "Quel professionnel est devenu le 'commissaire de justice' depuis juillet 2022 ?",
+    options: [
+      { key: "A", text: "L'huissier de justice" },
+      { key: "B", text: "Le greffier" },
+      { key: "C", text: "Le médiateur" },
+      { key: "D", text: "Le conciliateur" }
+    ],
+    correct: "A",
+    explanation: "Les huissiers de justice et les commissaires-priseurs judiciaires ont fusionné en une profession unique : le commissaire de justice.",
+    source: "justice.gouv.fr"
+  },
+  {
+    id: 24,
+    category: 'Métiers',
+    question: "Qui peut défendre un mineur dans une procédure pénale ?",
+    options: [
+      { key: "A", text: "Uniquement ses parents" },
+      { key: "B", text: "Un avocat spécialisé en droit des mineurs" },
+      { key: "C", text: "N'importe quel avocat" },
+      { key: "D", text: "Un éducateur de la protection judiciaire de la jeunesse" }
+    ],
+    correct: "B",
+    explanation: "Un avocat spécialisé en droit des mineurs est requis pour défendre un mineur dans une procédure pénale.",
+    source: "service-public.fr"
+  },
+  {
+    id: 25,
+    category: 'Métiers',
+    question: "Qui préside les audiences du tribunal correctionnel ?",
+    options: [
+      { key: "A", text: "Un juge unique ou trois magistrats" },
+      { key: "B", text: "Le procureur de la République" },
+      { key: "C", text: "Un jury populaire" },
+      { key: "D", text: "Le préfet" }
+    ],
+    correct: "A",
+    explanation: "Le tribunal correctionnel est présidé soit par un juge unique, soit par une formation collégiale de trois magistrats, selon la gravité de l'affaire.",
+    source: "justice.gouv.fr"
   }
 ];
 
