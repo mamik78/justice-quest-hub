@@ -38,6 +38,7 @@ const QuizPage = () => {
   const [isCorrect, setIsCorrect] = useState(false);
   const [aiHint, setAiHint] = useState<string | null>(null);
   const [isLoadingHint, setIsLoadingHint] = useState(false);
+  const [allAnswers, setAllAnswers] = useState<string[]>([]);
 
   useEffect(() => {
     // Si toutes les questions sont répondues, réinitialiser aux questions disponibles
@@ -55,7 +56,14 @@ const QuizPage = () => {
     const correct = key === currentQuestion.correct;
     setIsCorrect(correct);
     
+    // Stocker toutes les réponses incorrectes
     if (correct) {
+      // Stocker toutes les options incorrectes
+      const incorrectOptions = currentQuestion.options
+        .filter(opt => opt.key !== currentQuestion.correct)
+        .map(opt => opt.key);
+      setAllAnswers(incorrectOptions);
+      
       addPoints(10);
       incrementCategoryScore(currentQuestion.category);
       markQuestionCompleted(currentQuestion.id);
@@ -75,6 +83,9 @@ const QuizPage = () => {
         });
       }
     } else {
+      // Mettre à jour les réponses incorrectes
+      setAllAnswers([key]);
+      
       // Demander un indice à l'IA pour une mauvaise réponse
       setIsLoadingHint(true);
       try {
@@ -114,6 +125,7 @@ const QuizPage = () => {
     setIsAnswered(false);
     setIsCorrect(false);
     setAiHint(null);
+    setAllAnswers([]);
   };
 
   // Calculer la progression
@@ -153,7 +165,7 @@ const QuizPage = () => {
                 isAnswered
                   ? option.key === currentQuestion.correct
                     ? "correct"
-                    : option.key === selectedAnswer && option.key !== currentQuestion.correct
+                    : allAnswers.includes(option.key)
                     ? "incorrect"
                     : ""
                   : selectedAnswer === option.key
@@ -170,7 +182,7 @@ const QuizPage = () => {
                 {isAnswered && option.key === currentQuestion.correct && (
                   <CheckCircle className="text-green-600 ml-2" size={20} />
                 )}
-                {isAnswered && option.key === selectedAnswer && option.key !== currentQuestion.correct && (
+                {isAnswered && allAnswers.includes(option.key) && (
                   <XCircle className="text-red-600 ml-2" size={20} />
                 )}
               </div>

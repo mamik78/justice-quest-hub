@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 import { badges } from "../data/quizData";
 import JusticeAI from "../components/JusticeAI";
+import { Scale } from "lucide-react";
 
 const HomePage = () => {
   const { username, earnedBadges, points, categoryScores } = useUser();
@@ -80,7 +81,7 @@ const HomePage = () => {
         <div className="flex flex-col items-center justify-center py-12 text-center animate-fade-in">
           <div className="mb-8">
             <div className="flex items-center justify-center w-20 h-20 mx-auto bg-justice-primary text-white rounded-full mb-4">
-              <span className="text-4xl font-bold">C</span>
+              <Scale size={36} className="text-white" />
             </div>
             <h1 className="text-4xl font-bold text-justice-primary mb-4">C Justice SAUJ</h1>
             <p className="text-xl max-w-2xl mx-auto mb-6 text-gray-700">
@@ -88,7 +89,7 @@ const HomePage = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 max-w-4xl">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10 max-w-4xl">
             <div className="bg-white p-6 rounded-xl shadow-md">
               <div className="text-4xl mb-4">🏛️</div>
               <h2 className="text-xl font-bold mb-2">SAUJ</h2>
@@ -103,6 +104,11 @@ const HomePage = () => {
               <div className="text-4xl mb-4">👩‍⚖️</div>
               <h2 className="text-xl font-bold mb-2">Les Métiers</h2>
               <p className="text-gray-600">Explorez les différentes professions du monde judiciaire.</p>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-md">
+              <div className="text-4xl mb-4">📋</div>
+              <h2 className="text-xl font-bold mb-2">Organisation</h2>
+              <p className="text-gray-600">Découvrez l'organisation du système judiciaire français.</p>
             </div>
           </div>
           
