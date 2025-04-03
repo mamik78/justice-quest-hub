@@ -29,6 +29,20 @@ const OfficialLinks = () => {
               Service-public.fr
             </a>
           </li>
+          <li className="flex items-center">
+            <ExternalLink size={16} className="mr-2 text-justice-primary" />
+            <a href="https://www.avocat.fr/" target="_blank" rel="noopener noreferrer"
+               className="text-justice-primary hover:underline">
+              Avocat.fr
+            </a>
+          </li>
+          <li className="flex items-center">
+            <ExternalLink size={16} className="mr-2 text-justice-primary" />
+            <a href="https://www.conciliateurs.fr/" target="_blank" rel="noopener noreferrer"
+               className="text-justice-primary hover:underline">
+              Conciliateurs.fr
+            </a>
+          </li>
         </ul>
         
         <h4 className="font-semibold mt-4">Services en ligne :</h4>

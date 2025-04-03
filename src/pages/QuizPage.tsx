@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
@@ -5,6 +6,7 @@ import { quizQuestions, badges } from "../data/quizData";
 import { toast } from "sonner";
 import { QuestionCard } from "@/components/quiz/QuestionCard";
 import { ProgressHeader } from "@/components/quiz/ProgressHeader";
+import { QuizFooter } from "@/components/quiz/QuizFooter";
 
 const QuizPage = () => {
   const navigate = useNavigate();
@@ -102,6 +104,8 @@ const QuizPage = () => {
           onCorrectAnswer={handleCorrectAnswer}
           onNextQuestion={handleNextQuestion}
         />
+        
+        <QuizFooter currentQuestion={currentQuestion} />
       </div>
     </div>
   );
