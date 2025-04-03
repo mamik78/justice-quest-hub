@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 import { badges } from "../data/quizData";
 import JusticeAI from "../components/JusticeAI";
+import OfficialLinks from "../components/OfficialLinks";
 import { Scale } from "lucide-react";
 
 const HomePage = () => {
@@ -63,6 +64,9 @@ const HomePage = () => {
           {/* Composant IA Assistant Justice */}
           <JusticeAI />
           
+          {/* Composant liens officiels */}
+          <OfficialLinks />
+          
           {userBadges.length > 0 && (
             <div className="bg-white rounded-xl shadow-md p-6 mt-8 animate-fade-in">
               <h2 className="text-xl font-bold mb-4">Vos badges</h2>
@@ -83,7 +87,7 @@ const HomePage = () => {
             <div className="flex items-center justify-center w-20 h-20 mx-auto bg-justice-primary text-white rounded-full mb-4">
               <Scale size={36} className="text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-justice-primary mb-4">C Justice SAUJ</h1>
+            <h1 className="text-4xl font-bold text-justice-primary mb-4">C-Justice-SAUJ</h1>
             <p className="text-xl max-w-2xl mx-auto mb-6 text-gray-700">
               Découvre le monde de la justice de façon ludique avec des quiz interactifs !
             </p>
@@ -119,6 +123,11 @@ const HomePage = () => {
           {/* Composant IA pour les non-inscrits aussi */}
           <div className="w-full mt-10">
             <JusticeAI />
+          </div>
+          
+          {/* Composant liens officiels pour les non-inscrits aussi */}
+          <div className="w-full">
+            <OfficialLinks />
           </div>
         </div>
       )}

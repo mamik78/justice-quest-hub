@@ -4,6 +4,7 @@ import { getHintFromGroq } from "../services/groqService";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { Bot, AlertTriangle } from "lucide-react";
 
 const JusticeAI = () => {
   const [question, setQuestion] = useState("");
@@ -41,11 +42,27 @@ const JusticeAI = () => {
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden animate-fade-in">
       <div className="bg-gradient-to-r from-justice-primary to-justice-dark p-6 text-white">
-        <h2 className="text-2xl font-bold mb-2">Assistant Justice</h2>
-        <p className="text-justice-light">Posez vos questions sur la justice et l'organisation judiciaire</p>
+        <div className="flex items-center">
+          <Bot size={28} className="mr-3" />
+          <div>
+            <h2 className="text-2xl font-bold mb-2">Assistant Justice</h2>
+            <p className="text-justice-light">Posez vos questions sur la justice et l'organisation judiciaire</p>
+          </div>
+        </div>
       </div>
       
       <div className="p-6">
+        <div className="bg-amber-50 border border-amber-300 rounded-lg p-3 mb-4 flex items-start">
+          <AlertTriangle size={20} className="text-amber-500 mr-2 mt-0.5 flex-shrink-0" />
+          <p className="text-sm text-amber-800">
+            <strong>Attention :</strong> Cet assistant est une intelligence artificielle et peut faire des erreurs. 
+            Pour des informations officielles, consultez uniquement les sources légales comme 
+            <a href="https://www.legifrance.gouv.fr/" target="_blank" rel="noopener noreferrer" className="text-justice-primary font-semibold hover:underline mx-1">Légifrance</a>, 
+            <a href="https://www.justice.fr/" target="_blank" rel="noopener noreferrer" className="text-justice-primary font-semibold hover:underline mx-1">Justice.fr</a> ou 
+            <a href="https://www.service-public.fr/" target="_blank" rel="noopener noreferrer" className="text-justice-primary font-semibold hover:underline mx-1">Service-public.fr</a>.
+          </p>
+        </div>
+        
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <Textarea
