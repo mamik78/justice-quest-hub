@@ -15,6 +15,6 @@ export const quizQuestions: QuizQuestion[] = [
 ];
 
 // Re-export everything for backward compatibility
-export { QuizQuestion } from './questions/types';
+export type { QuizQuestion } from './questions/types';
 export { badges } from './badges';
 export { avatars } from './avatars';
