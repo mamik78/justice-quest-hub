@@ -47,16 +47,22 @@ const QuizPage = () => {
     }
   }, [availableQuestions]);
 
-  const handleAnswerSelection = async (key: string) => {
-    if (isAnswered) return;
+  // Nouvelle fonction pour sélectionner une réponse sans validation automatique
+  const handleSelectAnswer = (key: string) => {
+    if (!isAnswered) {
+      setSelectedAnswer(key);
+    }
+  };
+
+  // Fonction pour valider la réponse sélectionnée
+  const handleValidateAnswer = async () => {
+    if (isAnswered || !selectedAnswer) return;
     
-    setSelectedAnswer(key);
     setIsAnswered(true);
     
-    const correct = key === currentQuestion.correct;
+    const correct = selectedAnswer === currentQuestion.correct;
     setIsCorrect(correct);
     
-    // Stocker toutes les réponses incorrectes
     if (correct) {
       // Stocker toutes les options incorrectes
       const incorrectOptions = currentQuestion.options
@@ -84,13 +90,13 @@ const QuizPage = () => {
       }
     } else {
       // Mettre à jour les réponses incorrectes
-      setAllAnswers([key]);
+      setAllAnswers([selectedAnswer]);
       
       // Demander un indice à l'IA pour une mauvaise réponse
       setIsLoadingHint(true);
       try {
         const correctOption = currentQuestion.options.find(opt => opt.key === currentQuestion.correct);
-        const selectedOption = currentQuestion.options.find(opt => opt.key === key);
+        const selectedOption = currentQuestion.options.find(opt => opt.key === selectedAnswer);
         
         if (correctOption && selectedOption) {
           const hint = await getHintFromGroq(
@@ -171,8 +177,8 @@ const QuizPage = () => {
                   : selectedAnswer === option.key
                   ? "selected"
                   : ""
-              }`}
-              onClick={() => handleAnswerSelection(option.key)}
+              } cursor-pointer`}
+              onClick={() => handleSelectAnswer(option.key)}
             >
               <div className="flex items-start">
                 <div className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 mr-3">
@@ -189,6 +195,14 @@ const QuizPage = () => {
             </div>
           ))}
         </div>
+
+        {!isAnswered && selectedAnswer && (
+          <div className="flex justify-end mb-4">
+            <Button onClick={handleValidateAnswer} className="btn-primary">
+              Valider ma réponse
+            </Button>
+          </div>
+        )}
 
         {isAnswered && (
           <div className={`p-4 rounded-lg mb-6 ${isCorrect ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"}`}>
