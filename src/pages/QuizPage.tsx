@@ -40,6 +40,11 @@ const QuizPage = () => {
     incrementCategoryScore(category);
     markQuestionCompleted(questionId);
     
+    // Show success toast for correct answer
+    toast.success("Bonne réponse ! +10 points", {
+      duration: 3000,
+    });
+    
     // Check and award badges
     const newBadges = checkAndAwardBadges();
     
@@ -54,6 +59,13 @@ const QuizPage = () => {
         }
       });
     }
+  };
+  
+  // Handle an incorrect answer
+  const handleIncorrectAnswer = () => {
+    toast.error("Ce n'est pas la bonne réponse. Essaie encore!", {
+      duration: 3000,
+    });
   };
 
   const handleNextQuestion = () => {
@@ -93,6 +105,7 @@ const QuizPage = () => {
           key={`question-${currentQuestion.id}`}
           question={currentQuestion}
           onCorrectAnswer={handleCorrectAnswer}
+          onIncorrectAnswer={handleIncorrectAnswer}
           onNextQuestion={handleNextQuestion}
         />
         

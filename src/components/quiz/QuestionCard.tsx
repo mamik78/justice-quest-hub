@@ -9,12 +9,14 @@ import { QuizQuestion } from "@/data/quizData";
 interface QuestionCardProps {
   question: QuizQuestion;
   onCorrectAnswer: (category: 'SAUJ' | 'Justice' | 'Métiers', questionId: number) => void;
+  onIncorrectAnswer: () => void;
   onNextQuestion: () => void;
 }
 
 export const QuestionCard = ({ 
   question, 
   onCorrectAnswer,
+  onIncorrectAnswer,
   onNextQuestion
 }: QuestionCardProps) => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -62,6 +64,9 @@ export const QuestionCard = ({
     } else {
       // Update incorrect answers
       setAllAnswers([selectedAnswer]);
+      
+      // Call the callback for incorrect answers
+      onIncorrectAnswer();
       
       // Request a hint from AI for a wrong answer
       setIsLoadingHint(true);
