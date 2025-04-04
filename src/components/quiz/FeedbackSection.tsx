@@ -46,7 +46,10 @@ export const FeedbackSection = ({
       <p className="text-sm text-gray-500 mt-2">Source : {source}</p>
 
       <div className="flex justify-end mt-4">
-        <Button onClick={onNextQuestion} className="btn-primary">
+        <Button 
+          onClick={onNextQuestion} 
+          className="bg-justice-primary hover:bg-justice-primary/90 text-white"
+        >
           Question suivante
         </Button>
       </div>

@@ -26,19 +26,13 @@ const QuizPage = () => {
     }
   }, [username, navigate]);
 
-  // Uncompleted questions or all questions if everything is completed
+  // Get uncompleted questions or all questions if everything is completed
   const availableQuestions = quizQuestions.filter(q => 
     !completedQuestions.includes(q.id) || completedQuestions.length === quizQuestions.length
   );
 
-  const [currentQuestion, setCurrentQuestion] = useState(availableQuestions[0]);
-
-  useEffect(() => {
-    // If all questions are answered, reset to available questions
-    if (availableQuestions.length > 0) {
-      setCurrentQuestion(availableQuestions[0]);
-    }
-  }, [availableQuestions]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const currentQuestion = availableQuestions[currentQuestionIndex];
 
   // Handle a correct answer
   const handleCorrectAnswer = (category: 'SAUJ' | 'Justice' | 'Métiers', questionId: number) => {
@@ -63,21 +57,14 @@ const QuizPage = () => {
   };
 
   const handleNextQuestion = () => {
-    // Find the index of the current question
-    const currentIndex = availableQuestions.findIndex(q => q.id === currentQuestion.id);
-    
-    // If there is a next question, move to it
-    if (currentIndex < availableQuestions.length - 1) {
-      setCurrentQuestion(availableQuestions[currentIndex + 1]);
-    } else {
-      // Otherwise, return to the first question
-      setCurrentQuestion(availableQuestions[0]);
-    }
+    // Move to the next question or cycle back to the first question
+    setCurrentQuestionIndex((prevIndex) => 
+      prevIndex < availableQuestions.length - 1 ? prevIndex + 1 : 0
+    );
   };
 
   // Calculate progress
-  const currentIndex = availableQuestions.findIndex(q => q.id === currentQuestion.id);
-  const progress = (currentIndex + 1) / availableQuestions.length * 100;
+  const progress = ((currentQuestionIndex + 1) / availableQuestions.length) * 100;
 
   if (!currentQuestion) {
     return (
@@ -91,10 +78,10 @@ const QuizPage = () => {
 
   return (
     <div className="container mx-auto max-w-3xl px-4 py-8">
-      <div className="quiz-container">
+      <div className="quiz-container bg-white rounded-xl shadow-md p-6">
         <ProgressHeader 
           category={currentQuestion.category}
-          currentIndex={currentIndex}
+          currentIndex={currentQuestionIndex}
           totalQuestions={availableQuestions.length}
           progress={progress}
         />

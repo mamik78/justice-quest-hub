@@ -75,6 +75,19 @@ export const QuestionCard = ({
     }
   };
 
+  // Handler for moving to the next question
+  const handleNextQuestion = () => {
+    // Reset the component state for the next question
+    setSelectedAnswer(null);
+    setIsAnswered(false);
+    setIsCorrect(false);
+    setAiHint(null);
+    setAllAnswers([]);
+    
+    // Call the parent's onNextQuestion callback
+    onNextQuestion();
+  };
+
   return (
     <div className="animate-fade-in">
       <h2 className="text-xl font-bold mb-6">{question.question}</h2>
@@ -109,7 +122,7 @@ export const QuestionCard = ({
           source={question.source}
           aiHint={aiHint}
           isLoadingHint={isLoadingHint}
-          onNextQuestion={onNextQuestion}
+          onNextQuestion={handleNextQuestion}
         />
       )}
     </div>
