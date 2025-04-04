@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { AnswerOption } from "./AnswerOption";
 import { FeedbackSection } from "./FeedbackSection";
@@ -23,6 +23,16 @@ export const QuestionCard = ({
   const [aiHint, setAiHint] = useState<string | null>(null);
   const [isLoadingHint, setIsLoadingHint] = useState(false);
   const [allAnswers, setAllAnswers] = useState<string[]>([]);
+
+  // Reset state when question changes
+  useEffect(() => {
+    setSelectedAnswer(null);
+    setIsAnswered(false);
+    setIsCorrect(false);
+    setAiHint(null);
+    setIsLoadingHint(false);
+    setAllAnswers([]);
+  }, [question.id]);
 
   // Handler for selecting an answer without automatic validation
   const handleSelectAnswer = (key: string) => {
@@ -75,19 +85,6 @@ export const QuestionCard = ({
     }
   };
 
-  // Handler for moving to the next question
-  const handleNextQuestion = () => {
-    // Reset the component state for the next question
-    setSelectedAnswer(null);
-    setIsAnswered(false);
-    setIsCorrect(false);
-    setAiHint(null);
-    setAllAnswers([]);
-    
-    // Call the parent's onNextQuestion callback
-    onNextQuestion();
-  };
-
   return (
     <div className="animate-fade-in">
       <h2 className="text-xl font-bold mb-6">{question.question}</h2>
@@ -95,7 +92,7 @@ export const QuestionCard = ({
       <div className="space-y-3 mb-6">
         {question.options.map((option) => (
           <AnswerOption
-            key={option.key}
+            key={`${question.id}-${option.key}`}
             option={option}
             isAnswered={isAnswered}
             isCorrect={isCorrect}
@@ -109,7 +106,7 @@ export const QuestionCard = ({
 
       {!isAnswered && selectedAnswer && (
         <div className="flex justify-end mb-4">
-          <Button onClick={handleValidateAnswer} className="btn-primary">
+          <Button onClick={handleValidateAnswer} className="bg-justice-primary hover:bg-justice-primary/90 text-white">
             Valider ma réponse
           </Button>
         </div>
@@ -122,7 +119,7 @@ export const QuestionCard = ({
           source={question.source}
           aiHint={aiHint}
           isLoadingHint={isLoadingHint}
-          onNextQuestion={handleNextQuestion}
+          onNextQuestion={onNextQuestion}
         />
       )}
     </div>

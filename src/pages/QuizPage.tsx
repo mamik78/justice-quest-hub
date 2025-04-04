@@ -57,10 +57,13 @@ const QuizPage = () => {
   };
 
   const handleNextQuestion = () => {
-    // Move to the next question or cycle back to the first question
-    setCurrentQuestionIndex((prevIndex) => 
-      prevIndex < availableQuestions.length - 1 ? prevIndex + 1 : 0
-    );
+    // Force move to the next question or cycle back to the first question
+    // Using a callback to ensure we're working with the most current state
+    setCurrentQuestionIndex((prevIndex) => {
+      const nextIndex = prevIndex < availableQuestions.length - 1 ? prevIndex + 1 : 0;
+      console.log(`Moving from question ${prevIndex} to ${nextIndex}`);
+      return nextIndex;
+    });
   };
 
   // Calculate progress
@@ -87,6 +90,7 @@ const QuizPage = () => {
         />
 
         <QuestionCard 
+          key={`question-${currentQuestion.id}`}
           question={currentQuestion}
           onCorrectAnswer={handleCorrectAnswer}
           onNextQuestion={handleNextQuestion}
