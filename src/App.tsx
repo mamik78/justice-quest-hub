@@ -14,6 +14,7 @@ import ProfilePage from "./pages/ProfilePage";
 import DashboardPage from "./pages/DashboardPage";
 import MetiersPage from "./pages/MetiersPage";
 import OrganisationPage from "./pages/OrganisationPage";
+import HarcelementPage from "./pages/HarcelementPage";
 import NotFound from "./pages/NotFound";
 import ChatBot from "./components/ChatBot";
 
@@ -37,6 +38,7 @@ const App = () => (
                 <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/metiers" element={<MetiersPage />} />
                 <Route path="/organisation" element={<OrganisationPage />} />
+                <Route path="/harcelement" element={<HarcelementPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
