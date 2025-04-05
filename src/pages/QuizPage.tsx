@@ -34,6 +34,19 @@ const QuizPage = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const currentQuestion = availableQuestions[currentQuestionIndex];
 
+  // Calculate the actual question number in the complete quiz
+  const getAbsoluteQuestionNumber = () => {
+    if (!currentQuestion) return 0;
+    const categoryQuestions = quizQuestions.filter(q => q.category === currentQuestion.category);
+    return categoryQuestions.findIndex(q => q.id === currentQuestion.id) + 1;
+  };
+
+  // Get total questions for current category
+  const getTotalQuestionsForCategory = () => {
+    if (!currentQuestion) return 0;
+    return quizQuestions.filter(q => q.category === currentQuestion.category).length;
+  };
+
   // Handle a correct answer
   const handleCorrectAnswer = (category: 'SAUJ' | 'Justice' | 'Métiers', questionId: number) => {
     addPoints(10);
@@ -80,6 +93,8 @@ const QuizPage = () => {
 
   // Calculate progress
   const progress = ((currentQuestionIndex + 1) / availableQuestions.length) * 100;
+  const questionNumber = getAbsoluteQuestionNumber();
+  const totalCategoryQuestions = getTotalQuestionsForCategory();
 
   if (!currentQuestion) {
     return (
@@ -96,8 +111,8 @@ const QuizPage = () => {
       <div className="quiz-container bg-white rounded-xl shadow-md p-6">
         <ProgressHeader 
           category={currentQuestion.category}
-          currentIndex={currentQuestionIndex}
-          totalQuestions={availableQuestions.length}
+          currentIndex={questionNumber}
+          totalQuestions={totalCategoryQuestions}
           progress={progress}
         />
 

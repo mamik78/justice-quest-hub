@@ -24,7 +24,7 @@ export const QuizFooter = ({ currentQuestion }: QuizFooterProps) => {
         setAiHint(hint);
       } catch (error) {
         console.error("Erreur lors de la récupération de l'indice:", error);
-        setAiHint("Indice non disponible pour le moment. Lisez attentivement la question.");
+        setAiHint("Réfléchis aux principes fondamentaux de cette question.");
       } finally {
         setIsLoading(false);
       }
@@ -46,7 +46,7 @@ export const QuizFooter = ({ currentQuestion }: QuizFooterProps) => {
         ) : (
           <>
             <LightbulbIcon size={16} className="mr-2 text-amber-500" />
-            <p>Indice : {aiHint || "Lisez attentivement la question."}</p>
+            <p>Indice : {aiHint || "Réfléchis aux concepts clés de cette question."}</p>
           </>
         )}
       </div>
