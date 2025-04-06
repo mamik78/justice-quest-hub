@@ -1,5 +1,6 @@
 
 import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
 
 interface ProgressHeaderProps {
   category: string;
@@ -14,18 +15,36 @@ export const ProgressHeader = ({
   totalQuestions,
   progress
 }: ProgressHeaderProps) => {
+  
+  // Déterminer la couleur du badge selon la catégorie
+  const getBadgeColor = () => {
+    switch(category) {
+      case "SAUJ":
+        return "bg-blue-600";
+      case "Justice":
+        return "bg-green-600";
+      case "Métiers":
+        return "bg-amber-600";
+      default:
+        return "bg-justice-primary";
+    }
+  };
+  
   return (
     <>
-      <div className="flex justify-between items-center mb-2">
-        <span className="badge bg-justice-primary text-white px-2 py-1 rounded">
+      <div className="flex justify-between items-center mb-3">
+        <Badge 
+          variant="default" 
+          className={`px-3 py-1 text-white ${getBadgeColor()}`}
+        >
           {category}
-        </span>
-        <span className="text-sm text-gray-500">
+        </Badge>
+        <span className="text-sm font-medium bg-justice-light px-3 py-1 rounded-full">
           Question {currentIndex} / {totalQuestions}
         </span>
       </div>
 
-      <Progress value={progress} className="h-1 mb-4" />
+      <Progress value={progress} className="h-2 mb-4" />
     </>
   );
 };

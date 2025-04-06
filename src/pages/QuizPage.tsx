@@ -33,17 +33,23 @@ const QuizPage = () => {
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const currentQuestion = availableQuestions[currentQuestionIndex];
+  
+  // Trouver l'index global de la question actuelle dans la liste complète des questions
+  const findGlobalQuestionIndex = (questionId: number) => {
+    return quizQuestions.findIndex(q => q.id === questionId) + 1;
+  };
 
   // Calculate the current question number in the global quiz progression
   const getCurrentQuestionNumber = () => {
     if (!currentQuestion) return 1;
-    // Get the human readable question number (1-based index)
-    return currentQuestionIndex + 1;
+    
+    // Obtenir le numéro de question basé sur son ID global
+    return findGlobalQuestionIndex(currentQuestion.id);
   };
 
   // Get total questions for current session
   const getTotalAvailableQuestions = () => {
-    return availableQuestions.length;
+    return quizQuestions.length; // Utiliser le nombre total de questions pour l'affichage
   };
 
   // Handle a correct answer
@@ -91,9 +97,9 @@ const QuizPage = () => {
   };
 
   // Calculate progress
-  const progress = ((currentQuestionIndex + 1) / availableQuestions.length) * 100;
   const questionNumber = getCurrentQuestionNumber();
   const totalQuestions = getTotalAvailableQuestions();
+  const progress = (questionNumber / totalQuestions) * 100;
 
   if (!currentQuestion) {
     return (

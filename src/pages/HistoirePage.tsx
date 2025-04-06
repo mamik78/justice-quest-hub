@@ -1,8 +1,39 @@
 
 import { Scroll, BookOpen, Scale, Gavel } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { useEffect, useState } from "react";
 
 const HistoirePage = () => {
+  // État pour vérifier si les images sont chargées
+  const [imagesLoaded, setImagesLoaded] = useState({
+    grece: false,
+    rome: false,
+    napoleon: false,
+    constitution: false
+  });
+
+  // Fonction pour gérer le chargement d'image
+  const handleImageLoad = (image: keyof typeof imagesLoaded) => {
+    setImagesLoaded(prev => ({
+      ...prev,
+      [image]: true
+    }));
+  };
+
+  // Préchargement des images
+  useEffect(() => {
+    const preloadImage = (src: string, key: keyof typeof imagesLoaded) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => handleImageLoad(key);
+    };
+
+    preloadImage("/images/grece-antique.jpg", "grece");
+    preloadImage("/images/droit-romain.jpg", "rome");
+    preloadImage("/images/code-napoleon.jpg", "napoleon");
+    preloadImage("/images/constitution-francaise.jpg", "constitution");
+  }, []);
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="bg-white rounded-xl shadow-md p-6 mb-8">
@@ -38,6 +69,9 @@ const HistoirePage = () => {
           period="VIe - IVe siècle av. J.-C."
           icon={<Scale className="h-8 w-8" />}
           image="/images/grece-antique.jpg"
+          isLoaded={imagesLoaded.grece}
+          onImageLoad={() => handleImageLoad("grece")}
+          fallbackImage="https://images.unsplash.com/photo-1581092335878-2d9ff86ca2bf"
         >
           <p className="mb-4">
             La démocratie athénienne institue les premiers tribunaux populaires connus sous le nom d'Héliée. 
@@ -59,6 +93,9 @@ const HistoirePage = () => {
           period="450 av. J.-C. - VIe siècle"
           icon={<BookOpen className="h-8 w-8" />}
           image="/images/droit-romain.jpg"
+          isLoaded={imagesLoaded.rome}
+          onImageLoad={() => handleImageLoad("rome")}
+          fallbackImage="https://images.unsplash.com/photo-1618945524837-32307a05d7bd"
         >
           <p className="mb-4">
             Le droit romain a posé les bases conceptuelles et techniques du droit civil que nous connaissons aujourd'hui. 
@@ -78,6 +115,9 @@ const HistoirePage = () => {
           period="1804-1810"
           icon={<Gavel className="h-8 w-8" />}
           image="/images/code-napoleon.jpg"
+          isLoaded={imagesLoaded.napoleon}
+          onImageLoad={() => handleImageLoad("napoleon")}
+          fallbackImage="https://images.unsplash.com/photo-1589391886645-d51941baf7fb"
         >
           <p className="mb-4">
             Le Code civil de 1804, aussi appelé Code Napoléon, marque une étape décisive dans l'histoire du droit français et européen.
@@ -114,6 +154,9 @@ const HistoirePage = () => {
           period="1958 à nos jours"
           icon={<Scale className="h-8 w-8" />}
           image="/images/constitution-francaise.jpg"
+          isLoaded={imagesLoaded.constitution}
+          onImageLoad={() => handleImageLoad("constitution")}
+          fallbackImage="https://images.unsplash.com/photo-1589578527966-fdac0f44566c"
         >
           <p className="mb-4">
             La période contemporaine est marquée par la constitutionnalisation du droit et l'influence croissante 
@@ -143,7 +186,7 @@ const HistoirePage = () => {
           Pour tester vos connaissances sur l'histoire de la justice et les principes juridiques,
           n'hésitez pas à participer à notre quiz interactif.
         </p>
-        <button onClick={() => window.location.href = '/quiz'} className="btn-primary mt-4">
+        <button onClick={() => window.location.href = '/quiz'} className="py-2 px-4 bg-justice-primary text-white rounded-lg hover:bg-justice-dark transition-colors mt-4">
           Découvrir le quiz
         </button>
       </div>
@@ -157,14 +200,23 @@ const HistorySection = ({
   period, 
   children,
   icon,
-  image
+  image,
+  isLoaded,
+  onImageLoad,
+  fallbackImage
 }: { 
   title: string; 
   period: string; 
   children: React.ReactNode;
   icon: React.ReactNode;
   image?: string;
+  isLoaded?: boolean;
+  onImageLoad?: () => void;
+  fallbackImage?: string;
 }) => {
+  // Utiliser l'image de secours si l'image principale n'est pas chargée
+  const imageSrc = isLoaded ? image : fallbackImage;
+  
   return (
     <section className="bg-white rounded-xl shadow-md p-6">
       <div className="flex items-center gap-3 mb-2">
@@ -178,12 +230,20 @@ const HistorySection = ({
       </div>
       <Separator className="my-4" />
       
-      {image && (
+      {imageSrc && (
         <div className="mb-6">
           <img 
-            src={image} 
+            src={imageSrc} 
             alt={title} 
             className="w-full h-64 object-cover rounded-lg shadow-sm"
+            onLoad={onImageLoad}
+            onError={(e) => {
+              // En cas d'erreur, utiliser l'image de secours
+              const target = e.target as HTMLImageElement;
+              if (fallbackImage && target.src !== fallbackImage) {
+                target.src = fallbackImage;
+              }
+            }}
           />
         </div>
       )}

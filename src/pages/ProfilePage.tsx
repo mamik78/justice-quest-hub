@@ -1,12 +1,13 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
-import { avatars, badges, quizQuestions } from "../data/quizData";
+import { avatars } from "../data/avatars";
+import { badges, quizQuestions } from "../data/quizData";
 import { toast } from "sonner";
 import { Progress } from "@/components/ui/progress";
 import { BarChart3, Book, Award } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import BadgeDisplay from "@/components/quiz/BadgeDisplay";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -37,37 +38,38 @@ const ProfilePage = () => {
   const [overallProgress, setOverallProgress] = useState(0);
   
   const userBadges = badges.filter(badge => earnedBadges.includes(badge.id));
+  const unEarnedBadges = badges.filter(badge => !earnedBadges.includes(badge.id));
 
-  // Rediriger vers l'onboarding si pas de nom d'utilisateur
   useEffect(() => {
     if (!username) {
       navigate("/onboarding");
     }
   }, [username, navigate]);
 
-  // Calculer les progressions à chaque changement pertinent
   useEffect(() => {
-    // Calculer le progrès pour chaque catégorie
-    const saujQuestions = quizQuestions.filter(q => q.category === 'SAUJ').length;
-    const justiceQuestions = quizQuestions.filter(q => q.category === 'Justice').length;
-    const metiersQuestions = quizQuestions.filter(q => q.category === 'Métiers').length;
-    const totalQuestions = quizQuestions.length;
+    if (categoryScores && completedQuestions) {
+      // Calculer le progrès pour chaque catégorie
+      const saujQuestions = quizQuestions.filter(q => q.category === 'SAUJ').length;
+      const justiceQuestions = quizQuestions.filter(q => q.category === 'Justice').length;
+      const metiersQuestions = quizQuestions.filter(q => q.category === 'Métiers').length;
+      const totalQuestions = quizQuestions.length;
 
-    // Vérifier si le nombre de questions est supérieur à 0 pour éviter la division par zéro
-    if (saujQuestions > 0) {
-      setSaujProgress(Math.round((categoryScores.SAUJ / saujQuestions) * 100));
-    }
-    
-    if (justiceQuestions > 0) {
-      setJusticeProgress(Math.round((categoryScores.Justice / justiceQuestions) * 100));
-    }
-    
-    if (metiersQuestions > 0) {
-      setMetiersProgress(Math.round((categoryScores.Métiers / metiersQuestions) * 100));
-    }
-    
-    if (totalQuestions > 0) {
-      setOverallProgress(Math.round((completedQuestions.length / totalQuestions) * 100));
+      // Vérifier si le nombre de questions est supérieur à 0 pour éviter la division par zéro
+      if (saujQuestions > 0) {
+        setSaujProgress(Math.round((categoryScores.SAUJ / saujQuestions) * 100));
+      }
+      
+      if (justiceQuestions > 0) {
+        setJusticeProgress(Math.round((categoryScores.Justice / justiceQuestions) * 100));
+      }
+      
+      if (metiersQuestions > 0) {
+        setMetiersProgress(Math.round((categoryScores.Métiers / metiersQuestions) * 100));
+      }
+      
+      if (totalQuestions > 0) {
+        setOverallProgress(Math.round((completedQuestions.length / totalQuestions) * 100));
+      }
     }
   }, [categoryScores, completedQuestions]);
 
@@ -95,7 +97,6 @@ const ProfilePage = () => {
     }
   };
 
-  // Options pour les niveaux scolaires
   const niveauOptions = [
     "6ème",
     "5ème",
@@ -125,7 +126,7 @@ const ProfilePage = () => {
               </div>
               <div className="text-center">
                 <div className="font-bold text-xl mb-1">{username}</div>
-                <div className="flex items-center justify-center gap-1 bg-justice-gray px-3 py-1 rounded-full mb-4">
+                <div className="flex items-center justify-center gap-1 bg-justice-light px-3 py-1 rounded-full mb-4">
                   <span className="text-yellow-500">⭐</span>
                   <span className="font-semibold">{points} points</span>
                 </div>
@@ -174,10 +175,14 @@ const ProfilePage = () => {
                   {avatars.map((avatar) => (
                     <div
                       key={avatar.id}
-                      className={`avatar-option ${selectedAvatar === avatar.id ? "selected" : ""}`}
+                      className={`cursor-pointer rounded-lg p-1 border-2 transition-all duration-200 ${
+                        selectedAvatar === avatar.id 
+                          ? "border-justice-primary shadow-md" 
+                          : "border-transparent hover:border-justice-light"
+                      }`}
                       onClick={() => setSelectedAvatar(avatar.id)}
                     >
-                      <img src={avatar.src} alt={avatar.alt} className="w-full h-auto" />
+                      <img src={avatar.src} alt={avatar.alt} className="w-full h-auto rounded" />
                     </div>
                   ))}
                 </div>
@@ -194,7 +199,7 @@ const ProfilePage = () => {
                 <button
                   type="button"
                   onClick={handleSaveProfile}
-                  className="btn-primary"
+                  className="py-2 px-4 bg-justice-primary text-white rounded-lg hover:bg-justice-dark transition-colors"
                 >
                   Enregistrer
                 </button>
@@ -204,7 +209,6 @@ const ProfilePage = () => {
         </div>
       </div>
       
-      {/* Section Progression */}
       <Card className="p-6 shadow-md mb-8">
         <h2 className="text-xl font-semibold mb-4 flex items-center">
           <BarChart3 className="mr-2 h-5 w-5 text-justice-primary" />
@@ -223,21 +227,21 @@ const ProfilePage = () => {
               <span className="text-sm font-medium">SAUJ</span>
               <span className="text-sm font-medium">{saujProgress}%</span>
             </div>
-            <Progress value={saujProgress} className="h-2" />
+            <Progress value={saujProgress} className="h-2 bg-blue-100" indicatorColor="bg-blue-600" />
           </div>
           <div>
             <div className="flex justify-between mb-1">
               <span className="text-sm font-medium">Justice</span>
               <span className="text-sm font-medium">{justiceProgress}%</span>
             </div>
-            <Progress value={justiceProgress} className="h-2" />
+            <Progress value={justiceProgress} className="h-2 bg-green-100" indicatorColor="bg-green-600" />
           </div>
           <div>
             <div className="flex justify-between mb-1">
               <span className="text-sm font-medium">Métiers</span>
               <span className="text-sm font-medium">{metiersProgress}%</span>
             </div>
-            <Progress value={metiersProgress} className="h-2" />
+            <Progress value={metiersProgress} className="h-2 bg-amber-100" indicatorColor="bg-amber-600" />
           </div>
         </div>
         <div className="mt-4 text-center">
@@ -248,20 +252,20 @@ const ProfilePage = () => {
         </div>
       </Card>
       
-      {/* Badges */}
       <Card className="p-6 shadow-md mb-8 animate-fade-in">
         <h2 className="text-xl font-semibold mb-4 flex items-center">
           <Award className="mr-2 h-5 w-5 text-amber-500" />
           Mes badges
         </h2>
         {userBadges.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {userBadges.map(badge => (
-              <div key={badge.id} className="bg-justice-gray rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-                <div className="text-4xl mb-2">{badge.icon}</div>
-                <h3 className="font-semibold text-sm">{badge.title}</h3>
-                <p className="text-xs text-gray-500 mt-1">{badge.description}</p>
-              </div>
+              <BadgeDisplay
+                key={badge.id}
+                icon={badge.icon}
+                title={badge.title}
+                description={badge.description}
+              />
             ))}
           </div>
         ) : (
@@ -272,24 +276,24 @@ const ProfilePage = () => {
         )}
       </Card>
 
-      {/* Badges à débloquer */}
       <Card className="p-6 shadow-md mb-8">
         <h2 className="text-xl font-semibold mb-4 flex items-center">
           <Award className="mr-2 h-5 w-5 text-gray-400" />
           Badges à débloquer
         </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {badges.filter(badge => !earnedBadges.includes(badge.id)).map(badge => (
-            <div key={badge.id} className="text-center bg-gray-50 p-3 rounded-lg opacity-70">
-              <div className="text-3xl mb-2 grayscale">{badge.icon}</div>
-              <div className="font-medium text-sm">{badge.title}</div>
-              <div className="text-xs text-gray-500">{badge.description}</div>
-            </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          {unEarnedBadges.map(badge => (
+            <BadgeDisplay
+              key={badge.id}
+              icon={badge.icon}
+              title={badge.title}
+              description={badge.description}
+              isEarned={false}
+            />
           ))}
         </div>
       </Card>
       
-      {/* Feedback */}
       <div className="bg-white rounded-xl shadow-md p-6 animate-fade-in">
         <h2 className="text-xl font-bold mb-4">Donnez votre avis</h2>
         <p className="mb-4 text-gray-600">
@@ -307,7 +311,7 @@ const ProfilePage = () => {
         <div className="flex justify-end">
           <button
             onClick={handleSubmitFeedback}
-            className="btn-primary"
+            className="py-2 px-4 bg-justice-primary text-white rounded-lg hover:bg-justice-dark transition-colors"
             disabled={feedbackGiven || !feedback.trim()}
           >
             {feedbackGiven ? "Merci pour votre retour!" : "Envoyer"}
@@ -315,7 +319,6 @@ const ProfilePage = () => {
         </div>
       </div>
       
-      {/* Modal de confirmation */}
       {showConfirmReset && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl shadow-lg p-6 max-w-md w-full animate-scale-in">

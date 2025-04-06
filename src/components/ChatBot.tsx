@@ -1,6 +1,6 @@
 
-import { useState } from "react";
-import { MessageCircle, Send, X, Lightbulb } from "lucide-react";
+import { useState, useEffect } from "react";
+import { MessageCircle, Send, X, Lightbulb, Maximize2, Minimize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
@@ -8,6 +8,9 @@ import { getHintFromGroq } from "../services/groqService";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Separator } from "./ui/separator";
+import { useUser } from "../contexts/UserContext";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { avatars } from "../data/avatars";
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,14 +20,33 @@ const ChatBot = () => {
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const isMobile = useIsMobile();
+  const { username, selectedAvatar } = useUser();
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [currentSuggestionSet, setCurrentSuggestionSet] = useState(0);
   
-  // Suggestions de questions
-  const suggestions = [
-    "Qu'est-ce que le SAUJ ?",
-    "Comment porter plainte ?",
-    "Quels sont les différents types de juridictions ?",
-    "Quelle est la différence entre un avocat et un magistrat ?",
-    "Comment se déroule un procès ?"
+  // Ensembles de suggestions pour rotation
+  const suggestionSets = [
+    [
+      "Qu'est-ce que le SAUJ ?",
+      "Comment porter plainte ?",
+      "Quels sont les différents types de juridictions ?",
+      "Quelle est la différence entre un avocat et un magistrat ?",
+      "Comment se déroule un procès ?"
+    ],
+    [
+      "Qu'est-ce qu'un juge d'instruction ?",
+      "Comment fonctionne la cour d'assises ?",
+      "Quels sont mes droits en tant que victime ?",
+      "Comment devenir magistrat ?",
+      "Qu'est-ce qu'un greffier ?"
+    ],
+    [
+      "Comment déposer un recours ?",
+      "Qu'est-ce que l'aide juridictionnelle ?",
+      "Comment contacter un tribunal ?",
+      "Quelle différence entre civil et pénal ?",
+      "Comment se passe une médiation ?"
+    ]
   ];
   
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,6 +70,9 @@ const ChatBot = () => {
       
       // Add bot message to chat
       setMessages(prev => [...prev, { type: "bot", content: response }]);
+      
+      // Rotate to next suggestion set after receiving a response
+      setCurrentSuggestionSet((prev) => (prev + 1) % suggestionSets.length);
     } catch (error) {
       console.error("Erreur lors de la communication avec l'IA:", error);
       toast.error("Une erreur est survenue");
@@ -63,6 +88,14 @@ const ChatBot = () => {
   const handleSuggestionClick = (suggestion: string) => {
     setQuestion(suggestion);
   };
+  
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  // Récupérer l'avatar actuel
+  const currentAvatar = avatars.find(avatar => avatar.id === selectedAvatar);
+  const avatarSrc = currentAvatar ? currentAvatar.src : "";
 
   return (
     <div className="fixed bottom-4 right-4 z-50">
@@ -75,23 +108,44 @@ const ChatBot = () => {
             <MessageCircle className="text-white" size={24} />
           </Button>
         </SheetTrigger>
-        <SheetContent side={isMobile ? "bottom" : "right"} className={isMobile ? "h-[70vh] rounded-t-xl pt-4" : "w-[350px]"}>
+        <SheetContent 
+          side={isMobile ? "bottom" : "right"} 
+          className={`${isMobile ? "h-[70vh] rounded-t-xl pt-4" : ""} ${isExpanded ? "w-[600px] max-w-[90vw]" : "w-[380px]"}`}
+        >
           <div className="flex items-center justify-between mb-3">
-            <SheetHeader className="text-left p-0">
+            <SheetHeader className="text-left p-0 flex items-center">
+              <div className="mr-3">
+                <Avatar className="h-10 w-10 border-2 border-justice-primary">
+                  <AvatarImage src={avatarSrc} alt={username || "Utilisateur"} />
+                  <AvatarFallback className="bg-justice-light text-justice-primary">
+                    {username ? username.substring(0, 2).toUpperCase() : "U"}
+                  </AvatarFallback>
+                </Avatar>
+              </div>
               <SheetTitle className="flex items-center">
-                <MessageCircle className="text-justice-primary mr-2" size={20} />
                 Assistant Justice
               </SheetTitle>
             </SheetHeader>
             
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="h-8 w-8 p-0" 
-              onClick={() => setIsOpen(false)}
-            >
-              <X size={18} />
-            </Button>
+            <div className="flex items-center">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="h-8 w-8 p-0 mr-2" 
+                onClick={toggleExpand}
+              >
+                {isExpanded ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+              </Button>
+              
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="h-8 w-8 p-0" 
+                onClick={() => setIsOpen(false)}
+              >
+                <X size={18} />
+              </Button>
+            </div>
           </div>
           
           <Separator className="mb-3" />
@@ -104,18 +158,18 @@ const ChatBot = () => {
                   className={`p-3 rounded-lg ${
                     message.type === "user" 
                       ? "bg-justice-light ml-4 text-gray-800 font-medium" 
-                      : "bg-gray-200 mr-4 text-gray-900 font-medium"
+                      : "bg-justice-primary bg-opacity-10 mr-4 text-gray-900 font-medium border border-justice-primary border-opacity-20"
                   }`}
                 >
                   {message.content}
                 </div>
               ))}
               {isLoading && (
-                <div className="bg-gray-200 p-3 rounded-lg mr-4 text-gray-900">
+                <div className="bg-justice-primary bg-opacity-10 p-3 rounded-lg mr-4 text-gray-900 border border-justice-primary border-opacity-20">
                   <div className="flex space-x-2 items-center">
-                    <div className="w-2 h-2 bg-gray-600 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
-                    <div className="w-2 h-2 bg-gray-600 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></div>
-                    <div className="w-2 h-2 bg-gray-600 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></div>
+                    <div className="w-2 h-2 bg-justice-primary rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
+                    <div className="w-2 h-2 bg-justice-primary rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></div>
+                    <div className="w-2 h-2 bg-justice-primary rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></div>
                   </div>
                 </div>
               )}
@@ -124,19 +178,19 @@ const ChatBot = () => {
             {/* Suggestions */}
             <div className="mb-3">
               <div className="flex items-center text-sm text-gray-700 mb-2 font-medium">
-                <Lightbulb size={14} className="mr-1" />
+                <Lightbulb size={14} className="mr-1 text-justice-primary" />
                 <span>Suggestions:</span>
               </div>
-              <div className="flex flex-wrap gap-2">
-                {suggestions.map((suggestion, index) => (
+              <div className="flex flex-wrap gap-2 max-h-[100px] overflow-y-auto">
+                {suggestionSets[currentSuggestionSet].map((suggestion, index) => (
                   <Button
                     key={index}
                     variant="outline"
                     size="sm"
-                    className="text-xs py-1 px-2 h-auto bg-gray-50 hover:bg-gray-100 text-gray-700"
+                    className="text-xs py-1 px-2 h-auto bg-justice-light hover:bg-justice-light/80 text-justice-dark border-justice-primary/30"
                     onClick={() => handleSuggestionClick(suggestion)}
                   >
-                    {suggestion.length > 25 ? `${suggestion.substring(0, 25)}...` : suggestion}
+                    {suggestion}
                   </Button>
                 ))}
               </div>
@@ -148,10 +202,15 @@ const ChatBot = () => {
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
                   placeholder="Posez votre question..."
-                  className="resize-none text-sm"
+                  className="resize-none text-sm border-justice-primary/30 focus:border-justice-primary"
                   rows={2}
                 />
-                <Button type="submit" disabled={isLoading || !question.trim()} size="icon" className="h-[40px] w-[40px]">
+                <Button 
+                  type="submit" 
+                  disabled={isLoading || !question.trim()} 
+                  size="icon" 
+                  className="h-[40px] w-[40px] bg-justice-primary hover:bg-justice-dark"
+                >
                   <Send size={18} />
                 </Button>
               </div>
