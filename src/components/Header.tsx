@@ -2,7 +2,7 @@
 import { useUser } from "../contexts/UserContext";
 import { avatars } from "../data/quizData";
 import { Link, useLocation } from "react-router-dom";
-import { Home, BookOpen, User, BarChart3, Briefcase, Scale, AlertCircle } from "lucide-react";
+import { Home, BookOpen, User, BarChart3, Briefcase, Scale, AlertCircle, Scroll } from "lucide-react";
 
 const Header = () => {
   const { username, selectedAvatar, points } = useUser();
@@ -57,6 +57,9 @@ const Header = () => {
               </Link>
               <Link to="/quiz" className={getNavLinkClass("/quiz")}>
                 <BookOpen size={18} className="mr-1" /> Quiz
+              </Link>
+              <Link to="/histoire" className={getNavLinkClass("/histoire")}>
+                <Scroll size={18} className="mr-1" /> Histoire
               </Link>
               <Link to="/harcelement" className={getNavLinkClass("/harcelement")}>
                 <AlertCircle size={18} className="mr-1" /> Harcèlement

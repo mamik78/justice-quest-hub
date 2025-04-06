@@ -4,7 +4,7 @@ import { useUser } from "../contexts/UserContext";
 import { badges } from "../data/quizData";
 import JusticeAI from "../components/JusticeAI";
 import OfficialLinks from "../components/OfficialLinks";
-import { Scale } from "lucide-react";
+import { Scale, Scroll, BookOpen, Briefcase } from "lucide-react";
 
 const HomePage = () => {
   const { username, earnedBadges, points, categoryScores } = useUser();
@@ -53,9 +53,12 @@ const HomePage = () => {
                 </div>
               </div>
               
-              <div className="flex justify-center mt-4">
+              <div className="flex flex-wrap justify-center gap-4 mt-4">
                 <Link to="/quiz" className="btn-primary">
                   Continuer l'apprentissage
+                </Link>
+                <Link to="/histoire" className="btn-secondary">
+                  Découvrir l'histoire de la justice
                 </Link>
               </div>
             </div>
@@ -95,30 +98,43 @@ const HomePage = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10 max-w-4xl">
             <div className="bg-white p-6 rounded-xl shadow-md">
-              <div className="text-4xl mb-4">🏛️</div>
+              <div className="flex justify-center mb-4">
+                <BookOpen className="h-10 w-10 text-justice-primary" />
+              </div>
               <h2 className="text-xl font-bold mb-2">SAUJ</h2>
               <p className="text-gray-600">Découvrez le Service d'Accueil Unique du Justiciable et son rôle essentiel.</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-md">
-              <div className="text-4xl mb-4">⚖️</div>
+              <div className="flex justify-center mb-4">
+                <Scale className="h-10 w-10 text-justice-primary" />
+              </div>
               <h2 className="text-xl font-bold mb-2">La Justice</h2>
               <p className="text-gray-600">Comprenez les principes fondamentaux du système judiciaire français.</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-md">
-              <div className="text-4xl mb-4">👩‍⚖️</div>
+              <div className="flex justify-center mb-4">
+                <Briefcase className="h-10 w-10 text-justice-primary" />
+              </div>
               <h2 className="text-xl font-bold mb-2">Les Métiers</h2>
               <p className="text-gray-600">Explorez les différentes professions du monde judiciaire.</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-md">
-              <div className="text-4xl mb-4">📋</div>
-              <h2 className="text-xl font-bold mb-2">Organisation</h2>
-              <p className="text-gray-600">Découvrez l'organisation du système judiciaire français.</p>
+              <div className="flex justify-center mb-4">
+                <Scroll className="h-10 w-10 text-justice-primary" />
+              </div>
+              <h2 className="text-xl font-bold mb-2">Histoire</h2>
+              <p className="text-gray-600">Découvrez l'histoire fascinante de la justice, des Grecs à nos jours.</p>
             </div>
           </div>
           
-          <Link to="/onboarding" className="btn-primary text-lg px-8 py-3">
-            Commencer l'aventure
-          </Link>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link to="/onboarding" className="btn-primary text-lg px-8 py-3">
+              Commencer l'aventure
+            </Link>
+            <Link to="/histoire" className="btn-secondary text-lg px-8 py-3">
+              Explorer l'histoire de la justice
+            </Link>
+          </div>
           
           {/* Composant IA pour les non-inscrits aussi */}
           <div className="w-full mt-10">
