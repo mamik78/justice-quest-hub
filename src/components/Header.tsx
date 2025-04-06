@@ -2,12 +2,14 @@
 import { useUser } from "../contexts/UserContext";
 import { avatars } from "../data/quizData";
 import { Link, useLocation } from "react-router-dom";
-import { Home, BookOpen, User, BarChart3, Briefcase, Scale, AlertCircle, Scroll } from "lucide-react";
+import { Home, BookOpen, User, BarChart3, Briefcase, Scale, AlertCircle, Scroll, Menu, Info } from "lucide-react";
+import { useState } from "react";
 
 const Header = () => {
   const { username, selectedAvatar, points } = useUser();
   const location = useLocation();
   const userAvatar = avatars.find(avatar => avatar.id === selectedAvatar);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Déterminer la classe active pour la navigation
   const getNavLinkClass = (path: string) => {
@@ -15,6 +17,27 @@ const Header = () => {
     return location.pathname === path 
       ? `${baseClass} bg-justice-light text-justice-primary font-medium` 
       : `${baseClass} hover:bg-gray-100`;
+  };
+
+  // Menu principal - options essentielles
+  const mainMenuItems = [
+    { path: "/", icon: <Home size={18} className="mr-1" />, label: "Accueil" },
+    { path: "/quiz", icon: <BookOpen size={18} className="mr-1" />, label: "Quiz" },
+    { path: "/histoire", icon: <Scroll size={18} className="mr-1" />, label: "Histoire" }
+  ];
+
+  // Menu secondaire - options avancées/supplémentaires
+  const secondaryMenuItems = [
+    { path: "/harcelement", icon: <AlertCircle size={18} className="mr-1" />, label: "Harcèlement" },
+    { path: "/metiers", icon: <Briefcase size={18} className="mr-1" />, label: "Métiers" },
+    { path: "/organisation", icon: <Scale size={18} className="mr-1" />, label: "Organisation" },
+    { path: "/dashboard", icon: <BarChart3 size={18} className="mr-1" />, label: "Tableau de bord" },
+    { path: "/profile", icon: <User size={18} className="mr-1" />, label: "Profil" },
+    { path: "/about", icon: <Info size={18} className="mr-1" />, label: "À propos" }
+  ];
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
   };
 
   return (
@@ -48,36 +71,75 @@ const Header = () => {
           )}
         </div>
         
-        {/* Navigation principale */}
+        {/* Navigation principale pour les utilisateurs connectés */}
         {username && (
-          <nav className="flex justify-center pb-2 overflow-x-auto">
-            <div className="flex space-x-1">
-              <Link to="/" className={getNavLinkClass("/")}>
-                <Home size={18} className="mr-1" /> Accueil
-              </Link>
-              <Link to="/quiz" className={getNavLinkClass("/quiz")}>
-                <BookOpen size={18} className="mr-1" /> Quiz
-              </Link>
-              <Link to="/histoire" className={getNavLinkClass("/histoire")}>
-                <Scroll size={18} className="mr-1" /> Histoire
-              </Link>
-              <Link to="/harcelement" className={getNavLinkClass("/harcelement")}>
-                <AlertCircle size={18} className="mr-1" /> Harcèlement
-              </Link>
-              <Link to="/metiers" className={getNavLinkClass("/metiers")}>
-                <Briefcase size={18} className="mr-1" /> Métiers
-              </Link>
-              <Link to="/organisation" className={getNavLinkClass("/organisation")}>
-                <Scale size={18} className="mr-1" /> Organisation
-              </Link>
-              <Link to="/dashboard" className={getNavLinkClass("/dashboard")}>
-                <BarChart3 size={18} className="mr-1" /> Tableau de bord
-              </Link>
-              <Link to="/profile" className={getNavLinkClass("/profile")}>
-                <User size={18} className="mr-1" /> Profil
-              </Link>
-            </div>
-          </nav>
+          <div className="relative">
+            {/* Bouton menu mobile */}
+            <button 
+              className="md:hidden flex items-center justify-center w-full py-2 border-t border-gray-100 mt-2"
+              onClick={toggleMobileMenu}
+              aria-label="Toggle menu"
+            >
+              <Menu size={20} className="mr-2" />
+              <span>Menu</span>
+            </button>
+            
+            {/* Navigation desktop */}
+            <nav className="hidden md:flex justify-center pb-2 overflow-x-auto">
+              <div className="flex space-x-1">
+                {/* Menu principal toujours visible */}
+                {mainMenuItems.map(item => (
+                  <Link key={item.path} to={item.path} className={getNavLinkClass(item.path)}>
+                    {item.icon} {item.label}
+                  </Link>
+                ))}
+                
+                {/* Séparateur */}
+                <div className="border-r border-gray-200 mx-2"></div>
+                
+                {/* Menu secondaire */}
+                {secondaryMenuItems.map(item => (
+                  <Link key={item.path} to={item.path} className={getNavLinkClass(item.path)}>
+                    {item.icon} {item.label}
+                  </Link>
+                ))}
+              </div>
+            </nav>
+            
+            {/* Menu mobile */}
+            {mobileMenuOpen && (
+              <nav className="md:hidden absolute z-10 bg-white shadow-md w-full left-0 rounded-b-lg border-t border-gray-100 animate-fade-down">
+                <div className="flex flex-col p-2">
+                  {/* Menu principal */}
+                  {mainMenuItems.map(item => (
+                    <Link 
+                      key={item.path} 
+                      to={item.path} 
+                      className={getNavLinkClass(item.path) + " mb-1"}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.icon} {item.label}
+                    </Link>
+                  ))}
+                  
+                  {/* Séparateur */}
+                  <div className="border-b border-gray-200 my-2"></div>
+                  
+                  {/* Menu secondaire */}
+                  {secondaryMenuItems.map(item => (
+                    <Link 
+                      key={item.path} 
+                      to={item.path} 
+                      className={getNavLinkClass(item.path) + " mb-1"}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.icon} {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </nav>
+            )}
+          </div>
         )}
       </div>
     </header>
