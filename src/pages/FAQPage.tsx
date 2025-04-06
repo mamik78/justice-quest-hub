@@ -1,6 +1,5 @@
-
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { HelpCircle, BookOpen, Scale, Gavel, Government, Vote } from "lucide-react";
+import { HelpCircle, BookOpen, Scale, Gavel, Landmark, Vote } from "lucide-react";
 
 const FAQPage = () => {
   return (
@@ -75,7 +74,7 @@ const FAQPage = () => {
 const faqSections = [
   {
     title: "Les Institutions",
-    icon: Government,
+    icon: Landmark,
     questions: [
       {
         question: "Qu'est-ce que le législateur ?",
