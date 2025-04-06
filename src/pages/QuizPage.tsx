@@ -37,7 +37,7 @@ const QuizPage = () => {
   // Calculate the current question number in the global quiz progression
   const getCurrentQuestionNumber = () => {
     if (!currentQuestion) return 1;
-    // Get the index of the current question in the global questions array + 1 for human readability
+    // Get the human readable question number (1-based index)
     return currentQuestionIndex + 1;
   };
 

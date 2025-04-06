@@ -19,20 +19,19 @@ const Header = () => {
       : `${baseClass} hover:bg-gray-100`;
   };
 
-  // Menu principal - options essentielles
+  // Menu principal - options essentielles suivant l'ordre demandé
   const mainMenuItems = [
-    { path: "/", icon: <Home size={18} className="mr-1" />, label: "Accueil" },
+    { path: "/histoire", icon: <Scroll size={18} className="mr-1" />, label: "Histoire" },
+    { path: "/organisation", icon: <Scale size={18} className="mr-1" />, label: "Organisation" },
+    { path: "/metiers", icon: <Briefcase size={18} className="mr-1" />, label: "Métiers" },
     { path: "/quiz", icon: <BookOpen size={18} className="mr-1" />, label: "Quiz" },
-    { path: "/faq", icon: <HelpCircle size={18} className="mr-1" />, label: "FAQ" }
+    { path: "/profile", icon: <User size={18} className="mr-1" />, label: "Profil" }
   ];
 
   // Menu secondaire - options complémentaires
   const secondaryMenuItems = [
-    { path: "/histoire", icon: <Scroll size={18} className="mr-1" />, label: "Histoire" },
     { path: "/harcelement", icon: <AlertCircle size={18} className="mr-1" />, label: "Harcèlement" },
-    { path: "/metiers", icon: <Briefcase size={18} className="mr-1" />, label: "Métiers" },
-    { path: "/organisation", icon: <Scale size={18} className="mr-1" />, label: "Organisation" },
-    { path: "/profile", icon: <User size={18} className="mr-1" />, label: "Profil" },
+    { path: "/faq", icon: <HelpCircle size={18} className="mr-1" />, label: "FAQ" },
     { path: "/about", icon: <Info size={18} className="mr-1" />, label: "À propos" }
   ];
 
