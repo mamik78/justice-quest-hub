@@ -2,7 +2,7 @@
 import { useUser } from "../contexts/UserContext";
 import { avatars } from "../data/quizData";
 import { Link, useLocation } from "react-router-dom";
-import { Home, BookOpen, User, BarChart3, Briefcase, Scale, AlertCircle, Scroll, Menu, Info } from "lucide-react";
+import { Home, BookOpen, User, Briefcase, Scale, AlertCircle, Scroll, Menu, Info, HelpCircle } from "lucide-react";
 import { useState } from "react";
 
 const Header = () => {
@@ -23,15 +23,15 @@ const Header = () => {
   const mainMenuItems = [
     { path: "/", icon: <Home size={18} className="mr-1" />, label: "Accueil" },
     { path: "/quiz", icon: <BookOpen size={18} className="mr-1" />, label: "Quiz" },
-    { path: "/histoire", icon: <Scroll size={18} className="mr-1" />, label: "Histoire" }
+    { path: "/faq", icon: <HelpCircle size={18} className="mr-1" />, label: "FAQ" }
   ];
 
-  // Menu secondaire - options avancées/supplémentaires
+  // Menu secondaire - options complémentaires
   const secondaryMenuItems = [
+    { path: "/histoire", icon: <Scroll size={18} className="mr-1" />, label: "Histoire" },
     { path: "/harcelement", icon: <AlertCircle size={18} className="mr-1" />, label: "Harcèlement" },
     { path: "/metiers", icon: <Briefcase size={18} className="mr-1" />, label: "Métiers" },
     { path: "/organisation", icon: <Scale size={18} className="mr-1" />, label: "Organisation" },
-    { path: "/dashboard", icon: <BarChart3 size={18} className="mr-1" />, label: "Tableau de bord" },
     { path: "/profile", icon: <User size={18} className="mr-1" />, label: "Profil" },
     { path: "/about", icon: <Info size={18} className="mr-1" />, label: "À propos" }
   ];

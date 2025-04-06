@@ -11,7 +11,6 @@ import HomePage from "./pages/HomePage";
 import OnboardingPage from "./pages/OnboardingPage";
 import QuizPage from "./pages/QuizPage";
 import ProfilePage from "./pages/ProfilePage";
-import DashboardPage from "./pages/DashboardPage";
 import MetiersPage from "./pages/MetiersPage";
 import OrganisationPage from "./pages/OrganisationPage";
 import HarcelementPage from "./pages/HarcelementPage";
@@ -19,6 +18,7 @@ import HistoirePage from "./pages/HistoirePage";
 import AboutPage from "./pages/AboutPage";
 import NotFound from "./pages/NotFound";
 import ChatBot from "./components/ChatBot";
+import FAQPage from "./pages/FAQPage";
 
 const queryClient = new QueryClient();
 
@@ -37,12 +37,12 @@ const App = () => (
                 <Route path="/onboarding" element={<OnboardingPage />} />
                 <Route path="/quiz" element={<QuizPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/metiers" element={<MetiersPage />} />
                 <Route path="/organisation" element={<OrganisationPage />} />
                 <Route path="/harcelement" element={<HarcelementPage />} />
                 <Route path="/histoire" element={<HistoirePage />} />
                 <Route path="/about" element={<AboutPage />} />
+                <Route path="/faq" element={<FAQPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

@@ -103,19 +103,19 @@ const ChatBot = () => {
                   key={index} 
                   className={`p-3 rounded-lg ${
                     message.type === "user" 
-                      ? "bg-justice-light ml-4 text-gray-800" 
-                      : "bg-gray-100 mr-4 text-gray-800"
+                      ? "bg-justice-light ml-4 text-gray-800 font-medium" 
+                      : "bg-gray-200 mr-4 text-gray-900 font-medium"
                   }`}
                 >
                   {message.content}
                 </div>
               ))}
               {isLoading && (
-                <div className="bg-gray-100 p-3 rounded-lg mr-4 text-gray-800">
+                <div className="bg-gray-200 p-3 rounded-lg mr-4 text-gray-900">
                   <div className="flex space-x-2 items-center">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></div>
+                    <div className="w-2 h-2 bg-gray-600 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
+                    <div className="w-2 h-2 bg-gray-600 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></div>
+                    <div className="w-2 h-2 bg-gray-600 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></div>
                   </div>
                 </div>
               )}
@@ -123,7 +123,7 @@ const ChatBot = () => {
             
             {/* Suggestions */}
             <div className="mb-3">
-              <div className="flex items-center text-sm text-gray-500 mb-2">
+              <div className="flex items-center text-sm text-gray-700 mb-2 font-medium">
                 <Lightbulb size={14} className="mr-1" />
                 <span>Suggestions:</span>
               </div>
@@ -133,7 +133,7 @@ const ChatBot = () => {
                     key={index}
                     variant="outline"
                     size="sm"
-                    className="text-xs py-1 px-2 h-auto bg-gray-50 hover:bg-gray-100"
+                    className="text-xs py-1 px-2 h-auto bg-gray-50 hover:bg-gray-100 text-gray-700"
                     onClick={() => handleSuggestionClick(suggestion)}
                   >
                     {suggestion.length > 25 ? `${suggestion.substring(0, 25)}...` : suggestion}

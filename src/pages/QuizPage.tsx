@@ -34,17 +34,16 @@ const QuizPage = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const currentQuestion = availableQuestions[currentQuestionIndex];
 
-  // Calculate the actual question number in the complete quiz
-  const getAbsoluteQuestionNumber = () => {
-    if (!currentQuestion) return 0;
-    const categoryQuestions = quizQuestions.filter(q => q.category === currentQuestion.category);
-    return categoryQuestions.findIndex(q => q.id === currentQuestion.id) + 1;
+  // Calculate the current question number in the global quiz progression
+  const getCurrentQuestionNumber = () => {
+    if (!currentQuestion) return 1;
+    // Get the index of the current question in the global questions array + 1 for human readability
+    return currentQuestionIndex + 1;
   };
 
-  // Get total questions for current category
-  const getTotalQuestionsForCategory = () => {
-    if (!currentQuestion) return 0;
-    return quizQuestions.filter(q => q.category === currentQuestion.category).length;
+  // Get total questions for current session
+  const getTotalAvailableQuestions = () => {
+    return availableQuestions.length;
   };
 
   // Handle a correct answer
@@ -93,8 +92,8 @@ const QuizPage = () => {
 
   // Calculate progress
   const progress = ((currentQuestionIndex + 1) / availableQuestions.length) * 100;
-  const questionNumber = getAbsoluteQuestionNumber();
-  const totalCategoryQuestions = getTotalQuestionsForCategory();
+  const questionNumber = getCurrentQuestionNumber();
+  const totalQuestions = getTotalAvailableQuestions();
 
   if (!currentQuestion) {
     return (
@@ -112,7 +111,7 @@ const QuizPage = () => {
         <ProgressHeader 
           category={currentQuestion.category}
           currentIndex={questionNumber}
-          totalQuestions={totalCategoryQuestions}
+          totalQuestions={totalQuestions}
           progress={progress}
         />
 

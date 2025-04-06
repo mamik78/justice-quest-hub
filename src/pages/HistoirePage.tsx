@@ -37,6 +37,7 @@ const HistoirePage = () => {
           title="Les origines démocratiques : la Grèce antique" 
           period="VIe - IVe siècle av. J.-C."
           icon={<Scale className="h-8 w-8" />}
+          image="/images/grece-antique.jpg"
         >
           <p className="mb-4">
             La démocratie athénienne institue les premiers tribunaux populaires connus sous le nom d'Héliée. 
@@ -57,6 +58,7 @@ const HistoirePage = () => {
           title="L'héritage romain : les fondements du droit civil" 
           period="450 av. J.-C. - VIe siècle"
           icon={<BookOpen className="h-8 w-8" />}
+          image="/images/droit-romain.jpg"
         >
           <p className="mb-4">
             Le droit romain a posé les bases conceptuelles et techniques du droit civil que nous connaissons aujourd'hui. 
@@ -75,6 +77,7 @@ const HistoirePage = () => {
           title="Le Code Napoléon : la naissance du droit moderne" 
           period="1804-1810"
           icon={<Gavel className="h-8 w-8" />}
+          image="/images/code-napoleon.jpg"
         >
           <p className="mb-4">
             Le Code civil de 1804, aussi appelé Code Napoléon, marque une étape décisive dans l'histoire du droit français et européen.
@@ -110,6 +113,7 @@ const HistoirePage = () => {
           title="La justice contemporaine" 
           period="1958 à nos jours"
           icon={<Scale className="h-8 w-8" />}
+          image="/images/constitution-francaise.jpg"
         >
           <p className="mb-4">
             La période contemporaine est marquée par la constitutionnalisation du droit et l'influence croissante 
@@ -152,12 +156,14 @@ const HistorySection = ({
   title, 
   period, 
   children,
-  icon
+  icon,
+  image
 }: { 
   title: string; 
   period: string; 
   children: React.ReactNode;
   icon: React.ReactNode;
+  image?: string;
 }) => {
   return (
     <section className="bg-white rounded-xl shadow-md p-6">
@@ -171,6 +177,17 @@ const HistorySection = ({
         </div>
       </div>
       <Separator className="my-4" />
+      
+      {image && (
+        <div className="mb-6">
+          <img 
+            src={image} 
+            alt={title} 
+            className="w-full h-64 object-cover rounded-lg shadow-sm"
+          />
+        </div>
+      )}
+      
       <div className="prose max-w-none">
         {children}
       </div>
