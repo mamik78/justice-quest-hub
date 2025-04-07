@@ -53,7 +53,10 @@ const QuizPage = () => {
   };
 
   // Handle a correct answer
-  const handleCorrectAnswer = (category: 'SAUJ' | 'Justice' | 'Métiers', questionId: number) => {
+  const handleCorrectAnswer = (
+    category: 'SAUJ' | 'Justice' | 'Métiers' | 'Histoire' | 'Harcèlement' | 'Organisation', 
+    questionId: number
+  ) => {
     addPoints(10);
     incrementCategoryScore(category);
     markQuestionCompleted(questionId);

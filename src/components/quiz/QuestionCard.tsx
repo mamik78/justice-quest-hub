@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { AnswerOption } from "./AnswerOption";
@@ -8,7 +7,7 @@ import { QuizQuestion } from "@/data/quizData";
 
 interface QuestionCardProps {
   question: QuizQuestion;
-  onCorrectAnswer: (category: 'SAUJ' | 'Justice' | 'Métiers', questionId: number) => void;
+  onCorrectAnswer: (category: 'SAUJ' | 'Justice' | 'Métiers' | 'Histoire' | 'Harcèlement' | 'Organisation', questionId: number) => void;
   onIncorrectAnswer: () => void;
   onNextQuestion: () => void;
 }
@@ -26,7 +25,6 @@ export const QuestionCard = ({
   const [isLoadingHint, setIsLoadingHint] = useState(false);
   const [allAnswers, setAllAnswers] = useState<string[]>([]);
 
-  // Reset state when question changes
   useEffect(() => {
     setSelectedAnswer(null);
     setIsAnswered(false);
@@ -36,14 +34,12 @@ export const QuestionCard = ({
     setAllAnswers([]);
   }, [question.id]);
 
-  // Handler for selecting an answer without automatic validation
   const handleSelectAnswer = (key: string) => {
     if (!isAnswered) {
       setSelectedAnswer(key);
     }
   };
 
-  // Handler for validating the selected answer
   const handleValidateAnswer = async () => {
     if (isAnswered || !selectedAnswer) return;
     
@@ -53,22 +49,17 @@ export const QuestionCard = ({
     setIsCorrect(correct);
     
     if (correct) {
-      // Store all incorrect options
       const incorrectOptions = question.options
         .filter(opt => opt.key !== question.correct)
         .map(opt => opt.key);
       setAllAnswers(incorrectOptions);
       
-      // Trigger the callback to update scores
       onCorrectAnswer(question.category, question.id);
     } else {
-      // Update incorrect answers
       setAllAnswers([selectedAnswer]);
       
-      // Call the callback for incorrect answers
       onIncorrectAnswer();
       
-      // Request a hint from AI for a wrong answer
       setIsLoadingHint(true);
       try {
         const correctOption = question.options.find(opt => opt.key === question.correct);
