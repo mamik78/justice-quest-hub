@@ -1,5 +1,5 @@
 
-import { Progress } from "@/components/ui/progress";
+import { CustomProgress } from "@/components/ui/custom-progress";
 import { Badge } from "@/components/ui/badge";
 
 interface ProgressHeaderProps {
@@ -44,7 +44,7 @@ export const ProgressHeader = ({
         </span>
       </div>
 
-      <Progress value={progress} className="h-2 mb-4" />
+      <CustomProgress value={progress} className="h-2 mb-4" />
     </>
   );
 };

@@ -4,7 +4,7 @@ import { useUser } from "../contexts/UserContext";
 import { avatars } from "../data/avatars";
 import { badges, quizQuestions } from "../data/quizData";
 import { toast } from "sonner";
-import { Progress } from "@/components/ui/progress";
+import { CustomProgress } from "@/components/ui/custom-progress";
 import { BarChart3, Book, Award } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import BadgeDisplay from "@/components/quiz/BadgeDisplay";
@@ -48,13 +48,11 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (categoryScores && completedQuestions) {
-      // Calculer le progrès pour chaque catégorie
       const saujQuestions = quizQuestions.filter(q => q.category === 'SAUJ').length;
       const justiceQuestions = quizQuestions.filter(q => q.category === 'Justice').length;
       const metiersQuestions = quizQuestions.filter(q => q.category === 'Métiers').length;
       const totalQuestions = quizQuestions.length;
 
-      // Vérifier si le nombre de questions est supérieur à 0 pour éviter la division par zéro
       if (saujQuestions > 0) {
         setSaujProgress(Math.round((categoryScores.SAUJ / saujQuestions) * 100));
       }
@@ -89,7 +87,6 @@ const ProfilePage = () => {
 
   const handleSubmitFeedback = () => {
     if (feedback.trim()) {
-      // Ici, on pourrait envoyer le feedback à un serveur
       console.log("Feedback soumis:", feedback);
       setFeedbackGiven(true);
       setFeedback("");
@@ -220,28 +217,28 @@ const ProfilePage = () => {
               <span className="text-sm font-medium">Progression globale</span>
               <span className="text-sm font-medium">{overallProgress}%</span>
             </div>
-            <Progress value={overallProgress} className="h-2" />
+            <CustomProgress value={overallProgress} className="h-2" />
           </div>
           <div>
             <div className="flex justify-between mb-1">
               <span className="text-sm font-medium">SAUJ</span>
               <span className="text-sm font-medium">{saujProgress}%</span>
             </div>
-            <Progress value={saujProgress} className="h-2 bg-blue-100" indicatorColor="bg-blue-600" />
+            <CustomProgress value={saujProgress} className="h-2 bg-blue-100" indicatorColor="bg-blue-600" />
           </div>
           <div>
             <div className="flex justify-between mb-1">
               <span className="text-sm font-medium">Justice</span>
               <span className="text-sm font-medium">{justiceProgress}%</span>
             </div>
-            <Progress value={justiceProgress} className="h-2 bg-green-100" indicatorColor="bg-green-600" />
+            <CustomProgress value={justiceProgress} className="h-2 bg-green-100" indicatorColor="bg-green-600" />
           </div>
           <div>
             <div className="flex justify-between mb-1">
               <span className="text-sm font-medium">Métiers</span>
               <span className="text-sm font-medium">{metiersProgress}%</span>
             </div>
-            <Progress value={metiersProgress} className="h-2 bg-amber-100" indicatorColor="bg-amber-600" />
+            <CustomProgress value={metiersProgress} className="h-2 bg-amber-100" indicatorColor="bg-amber-600" />
           </div>
         </div>
         <div className="mt-4 text-center">
