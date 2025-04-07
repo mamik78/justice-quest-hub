@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { MessageCircle, Send, X, Lightbulb, Maximize2, Minimize2, ChevronUp, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,13 @@ import { useUser } from "../contexts/UserContext";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { avatars } from "../data/avatars";
 
+// Enum pour les tailles du chat
+enum ChatSize {
+  Small = "small",
+  Normal = "normal",
+  Fullscreen = "fullscreen"
+}
+
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [question, setQuestion] = useState("");
@@ -20,10 +28,9 @@ const ChatBot = () => {
   const [isLoading, setIsLoading] = useState(false);
   const isMobile = useIsMobile();
   const { username, selectedAvatar } = useUser();
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [currentSuggestionSet, setCurrentSuggestionSet] = useState(0);
+  const [chatSize, setChatSize] = useState<ChatSize>(ChatSize.Small);
   const [showSuggestions, setShowSuggestions] = useState(true);
+  const [currentSuggestionSet, setCurrentSuggestionSet] = useState(0);
   
   const suggestionSets = [
     [
@@ -94,33 +101,56 @@ const ChatBot = () => {
     setQuestion(suggestion);
   };
   
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-    
-    if (isFullscreen) {
-      return;
-    }
-  };
-  
-  const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
-    if (!isFullscreen) {
-      setIsExpanded(true);
-    }
-  };
-  
   const toggleSuggestions = () => {
     setShowSuggestions(!showSuggestions);
+  };
+  
+  const cycleChatSize = () => {
+    switch (chatSize) {
+      case ChatSize.Small:
+        setChatSize(ChatSize.Normal);
+        break;
+      case ChatSize.Normal:
+        setChatSize(ChatSize.Fullscreen);
+        break;
+      case ChatSize.Fullscreen:
+        setChatSize(ChatSize.Small);
+        break;
+    }
+  };
+  
+  const getSizeIcon = () => {
+    if (chatSize === ChatSize.Fullscreen) {
+      return <Minimize2 size={18} />;
+    }
+    return <Maximize2 size={18} />;
+  };
+  
+  const getSizeClasses = () => {
+    switch (chatSize) {
+      case ChatSize.Small:
+        return "w-[380px]";
+      case ChatSize.Normal:
+        return "w-[80vw] max-w-[800px] h-[80vh]";
+      case ChatSize.Fullscreen:
+        return "w-[95vw] max-w-[1200px] h-[90vh]";
+    }
   };
 
   const currentAvatar = avatars.find(avatar => avatar.id === selectedAvatar);
   const avatarSrc = currentAvatar ? currentAvatar.src : "";
   
-  const sizeClasses = isFullscreen 
-    ? "w-[95vw] max-w-[1200px] h-[90vh]" 
-    : isExpanded 
-      ? "w-[80vw] max-w-[800px] h-[80vh]" 
-      : "w-[380px]";
+  const sizeClasses = getSizeClasses();
+  const getSizeTitle = () => {
+    switch (chatSize) {
+      case ChatSize.Small:
+        return "Agrandir";
+      case ChatSize.Normal:
+        return "Plein écran";
+      case ChatSize.Fullscreen:
+        return "Réduire";
+    }
+  };
 
   return (
     <div className="fixed bottom-4 right-4 z-50">
@@ -157,20 +187,10 @@ const ChatBot = () => {
                 variant="ghost" 
                 size="sm" 
                 className="h-8 w-8 p-0 mr-2" 
-                onClick={toggleExpand}
-                title={isExpanded ? "Réduire" : "Agrandir"}
+                onClick={cycleChatSize}
+                title={getSizeTitle()}
               >
-                {isExpanded ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
-              </Button>
-              
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="h-8 w-8 p-0 mr-2" 
-                onClick={toggleFullscreen}
-                title={isFullscreen ? "Quitter le plein écran" : "Plein écran"}
-              >
-                {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+                {getSizeIcon()}
               </Button>
               
               <Button 

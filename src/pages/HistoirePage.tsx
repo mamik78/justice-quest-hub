@@ -29,7 +29,7 @@ const HistoirePage = () => {
 
     preloadImage("/images/parthenon-athenes.jpg", "grece");
     preloadImage("/images/louve-romaine-capitole.jpg", "rome");
-    preloadImage("/images/napoleon-code.jpg", "napoleon");
+    preloadImage("/images/napoleon-code-david.jpg", "napoleon");
     preloadImage("/images/constitution-francaise.jpg", "constitution");
   }, []);
 
@@ -113,10 +113,11 @@ const HistoirePage = () => {
           title="Le Code Napoléon : la naissance du droit moderne" 
           period="1804-1810"
           icon={<Gavel className="h-8 w-8" />}
-          image="/images/napoleon-code.jpg"
+          image="/images/napoleon-code-david.jpg"
           isLoaded={imagesLoaded.napoleon}
           onImageLoad={() => handleImageLoad("napoleon")}
           fallbackImage="https://images.unsplash.com/photo-1589391886645-d51941baf7fb"
+          imageReference="Jacques-Louis David, 'Napoléon dans son cabinet de travail', 1812"
         >
           <p className="mb-4">
             Le Code civil de 1804, aussi appelé Code Napoléon, marque une étape décisive dans l'histoire du droit français et européen.
@@ -202,7 +203,8 @@ const HistorySection = ({
   image,
   isLoaded,
   onImageLoad,
-  fallbackImage
+  fallbackImage,
+  imageReference
 }: { 
   title: string; 
   period: string; 
@@ -212,6 +214,7 @@ const HistorySection = ({
   isLoaded?: boolean;
   onImageLoad?: () => void;
   fallbackImage?: string;
+  imageReference?: string;
 }) => {
   // Utiliser l'image de secours si l'image principale n'est pas chargée
   const imageSrc = isLoaded ? image : fallbackImage;
@@ -244,6 +247,9 @@ const HistorySection = ({
               }
             }}
           />
+          {imageReference && (
+            <p className="text-xs text-gray-500 mt-1 italic text-right">{imageReference}</p>
+          )}
         </div>
       )}
       

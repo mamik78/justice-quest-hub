@@ -71,5 +71,75 @@ export const histoireQuestions: QuizQuestion[] = [
     correct: "B",
     explanation: "Le Corpus Juris Civilis de Justinien (529-534) représente la compilation et codification monumentale du droit romain, qui a influencé tous les systèmes juridiques occidentaux.",
     source: "Histoire du droit byzantin"
+  },
+  {
+    id: 36,
+    category: 'Histoire',
+    question: "Quel personnage historique a joué un rôle majeur dans la rédaction du Code civil français de 1804 ?",
+    options: [
+      { key: "A", text: "Louis XVI" },
+      { key: "B", text: "Napoléon Bonaparte" },
+      { key: "C", text: "Robespierre" },
+      { key: "D", text: "Montesquieu" }
+    ],
+    correct: "B",
+    explanation: "Napoléon Bonaparte, alors Premier Consul, a supervisé personnellement la rédaction du Code civil et participé activement à plusieurs séances de travail des juristes.",
+    source: "Histoire du droit français"
+  },
+  {
+    id: 37,
+    category: 'Histoire',
+    question: "Quelle institution judiciaire a été créée en France en 1958 ?",
+    options: [
+      { key: "A", text: "La Cour de cassation" },
+      { key: "B", text: "Le Conseil constitutionnel" },
+      { key: "C", text: "La Cour européenne des droits de l'homme" },
+      { key: "D", text: "Le Tribunal des conflits" }
+    ],
+    correct: "B",
+    explanation: "Le Conseil constitutionnel a été créé par la Constitution de la Ve République en 1958 pour veiller à la constitutionnalité des lois.",
+    source: "Histoire des institutions"
+  },
+  {
+    id: 38,
+    category: 'Histoire',
+    question: "Quelle réforme majeure de la justice a eu lieu en France en 1981 ?",
+    options: [
+      { key: "A", text: "L'abolition de la peine de mort" },
+      { key: "B", text: "La création du tribunal d'instance" },
+      { key: "C", text: "L'instauration du divorce par consentement mutuel" },
+      { key: "D", text: "La création des juges de proximité" }
+    ],
+    correct: "A",
+    explanation: "L'abolition de la peine de mort a été votée en 1981 sous la présidence de François Mitterrand, à l'initiative du garde des Sceaux Robert Badinter.",
+    source: "Histoire du droit pénal français"
+  },
+  {
+    id: 39,
+    category: 'Histoire',
+    question: "À quelle époque la présomption d'innocence devient-elle un principe fondamental du droit pénal moderne ?",
+    options: [
+      { key: "A", text: "Au Moyen Âge" },
+      { key: "B", text: "Pendant la Renaissance" },
+      { key: "C", text: "Au siècle des Lumières" },
+      { key: "D", text: "Après la Seconde Guerre mondiale" }
+    ],
+    correct: "C",
+    explanation: "C'est au siècle des Lumières (XVIIIe siècle) que des philosophes comme Beccaria et Voltaire ont défendu la présomption d'innocence comme principe fondamental de justice.",
+    source: "Histoire de la pensée juridique"
+  },
+  {
+    id: 40,
+    category: 'Histoire',
+    question: "Quelle est l'année de création du Service d'Accueil Unique du Justiciable (SAUJ) ?",
+    options: [
+      { key: "A", text: "2002" },
+      { key: "B", text: "2010" },
+      { key: "C", text: "2016" },
+      { key: "D", text: "2020" }
+    ],
+    correct: "C",
+    explanation: "Le Service d'Accueil Unique du Justiciable (SAUJ) a été créé par la loi de modernisation de la justice du XXIe siècle promulguée le 18 novembre 2016.",
+    source: "Loi du 18 novembre 2016 de modernisation de la justice du XXIe siècle"
   }
 ];
