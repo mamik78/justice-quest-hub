@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { MessageCircle, Send, X, Lightbulb, Maximize2, Minimize2, ChevronUp, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,7 +25,6 @@ const ChatBot = () => {
   const [currentSuggestionSet, setCurrentSuggestionSet] = useState(0);
   const [showSuggestions, setShowSuggestions] = useState(true);
   
-  // Ensembles de suggestions pour rotation
   const suggestionSets = [
     [
       "Qu'est-ce que le SAUJ ?",
@@ -64,7 +62,7 @@ const ChatBot = () => {
       "Qui peut bénéficier de l'aide juridictionnelle ?"
     ]
   ];
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -72,22 +70,13 @@ const ChatBot = () => {
       return;
     }
     
-    // Add user message to chat
     setMessages(prev => [...prev, { type: "user", content: question }]);
-    
-    // Clear input
     setQuestion("");
-    
     setIsLoading(true);
     
     try {
-      // Get response from AI
       const response = await getHintFromGroq(question);
-      
-      // Add bot message to chat
       setMessages(prev => [...prev, { type: "bot", content: response }]);
-      
-      // Rotate to next suggestion set after receiving a response
       setCurrentSuggestionSet((prev) => (prev + 1) % suggestionSets.length);
     } catch (error) {
       console.error("Erreur lors de la communication avec l'IA:", error);
@@ -108,7 +97,6 @@ const ChatBot = () => {
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
     
-    // Si on était déjà en plein écran, on reste en plein écran
     if (isFullscreen) {
       return;
     }
@@ -116,7 +104,6 @@ const ChatBot = () => {
   
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
-    // En mode plein écran, on est automatiquement "expanded"
     if (!isFullscreen) {
       setIsExpanded(true);
     }
@@ -126,11 +113,9 @@ const ChatBot = () => {
     setShowSuggestions(!showSuggestions);
   };
 
-  // Récupérer l'avatar actuel
   const currentAvatar = avatars.find(avatar => avatar.id === selectedAvatar);
   const avatarSrc = currentAvatar ? currentAvatar.src : "";
   
-  // Calculer les classes pour la taille du chatbot
   const sizeClasses = isFullscreen 
     ? "w-[95vw] max-w-[1200px] h-[90vh]" 
     : isExpanded 
@@ -226,7 +211,6 @@ const ChatBot = () => {
               )}
             </div>
             
-            {/* Suggestions avec contrôle de visibilité */}
             <div className="mb-3">
               <div className="flex items-center justify-between text-sm text-gray-700 mb-2 font-medium">
                 <div className="flex items-center">

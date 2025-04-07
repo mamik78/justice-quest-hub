@@ -1,6 +1,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { avatars, badges } from "../data/quizData";
+import { badges } from "@/data/badges";
+import { avatars } from "@/data/avatars";
 
 interface UserContextType {
   username: string;
@@ -29,7 +30,7 @@ const defaultUserContext: UserContextType = {
   setSelectedAvatar: () => {},
   points: 0,
   addPoints: () => {},
-  categoryScores: { SAUJ: 0, Justice: 0, Métiers: 0 },
+  categoryScores: { SAUJ: 0, Justice: 0, Métiers: 0, Histoire: 0, Harcèlement: 0, Organisation: 0 },
   incrementCategoryScore: () => {},
   earnedBadges: [],
   checkAndAwardBadges: () => [],
@@ -65,7 +66,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   
   const [categoryScores, setCategoryScores] = useState<Record<string, number>>(() => {
     const saved = localStorage.getItem("categoryScores");
-    return saved ? JSON.parse(saved) : { SAUJ: 0, Justice: 0, Métiers: 0 };
+    return saved ? JSON.parse(saved) : { 
+      SAUJ: 0, Justice: 0, Métiers: 0, Histoire: 0, Harcèlement: 0, Organisation: 0 
+    };
   });
   
   const [earnedBadges, setEarnedBadges] = useState<string[]>(() => {
@@ -154,7 +157,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const resetProgress = () => {
     setPoints(0);
-    setCategoryScores({ SAUJ: 0, Justice: 0, Métiers: 0 });
+    setCategoryScores({ 
+      SAUJ: 0, Justice: 0, Métiers: 0, Histoire: 0, Harcèlement: 0, Organisation: 0 
+    });
     setEarnedBadges([]);
     setCompletedQuestions([]);
     setFeedbackGiven(false);

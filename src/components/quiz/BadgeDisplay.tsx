@@ -1,6 +1,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { CustomProgress } from "@/components/ui/custom-progress";
 
 interface BadgeDisplayProps {
   icon: string;
@@ -46,13 +47,12 @@ const BadgeDisplay = ({
               </Badge>
             ) : (
               <div className="mt-2">
-                <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-justice-primary/60" 
-                    style={{ width: `${progressPercentage}%` }}
-                  />
-                </div>
-                <p className="text-xs text-gray-500 mt-1">{progress}/{requiredScore}</p>
+                <CustomProgress 
+                  value={progressPercentage} 
+                  className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden"
+                  indicatorColor="bg-justice-primary/60" 
+                />
+                <p className="text-xs text-gray-500 mt-1">{progress}/{requiredScore} ({progressPercentage}%)</p>
               </div>
             )}
           </div>

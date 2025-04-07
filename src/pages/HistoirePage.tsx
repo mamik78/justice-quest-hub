@@ -70,7 +70,7 @@ const HistoirePage = () => {
           image="/images/parthenon-athenes.jpg"
           isLoaded={imagesLoaded.grece}
           onImageLoad={() => handleImageLoad("grece")}
-          fallbackImage="https://images.unsplash.com/photo-1426604966848-d7adac402bff"
+          fallbackImage="https://images.unsplash.com/photo-1603565816030-6b389eeb23cb"
         >
           <p className="mb-4">
             La démocratie athénienne institue les premiers tribunaux populaires connus sous le nom d'Héliée. 
@@ -94,7 +94,7 @@ const HistoirePage = () => {
           image="/images/louve-romaine-capitole.jpg"
           isLoaded={imagesLoaded.rome}
           onImageLoad={() => handleImageLoad("rome")}
-          fallbackImage="https://images.unsplash.com/photo-1618945524837-32307a05d7bd"
+          fallbackImage="https://images.unsplash.com/photo-1552832230-c0197dd311b5"
         >
           <p className="mb-4">
             Le droit romain a posé les bases conceptuelles et techniques du droit civil que nous connaissons aujourd'hui. 
