@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { MessageCircle, Send, X, Lightbulb, Maximize2, Minimize2 } from "lucide-react";
+import { MessageCircle, Send, X, Lightbulb, Maximize2, Minimize2, ChevronUp, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
@@ -22,7 +22,9 @@ const ChatBot = () => {
   const isMobile = useIsMobile();
   const { username, selectedAvatar } = useUser();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [currentSuggestionSet, setCurrentSuggestionSet] = useState(0);
+  const [showSuggestions, setShowSuggestions] = useState(true);
   
   // Ensembles de suggestions pour rotation
   const suggestionSets = [
@@ -105,11 +107,35 @@ const ChatBot = () => {
   
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
+    
+    // Si on était déjà en plein écran, on reste en plein écran
+    if (isFullscreen) {
+      return;
+    }
+  };
+  
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
+    // En mode plein écran, on est automatiquement "expanded"
+    if (!isFullscreen) {
+      setIsExpanded(true);
+    }
+  };
+  
+  const toggleSuggestions = () => {
+    setShowSuggestions(!showSuggestions);
   };
 
   // Récupérer l'avatar actuel
   const currentAvatar = avatars.find(avatar => avatar.id === selectedAvatar);
   const avatarSrc = currentAvatar ? currentAvatar.src : "";
+  
+  // Calculer les classes pour la taille du chatbot
+  const sizeClasses = isFullscreen 
+    ? "w-[95vw] max-w-[1200px] h-[90vh]" 
+    : isExpanded 
+      ? "w-[80vw] max-w-[800px] h-[80vh]" 
+      : "w-[380px]";
 
   return (
     <div className="fixed bottom-4 right-4 z-50">
@@ -124,7 +150,7 @@ const ChatBot = () => {
         </SheetTrigger>
         <SheetContent 
           side={isMobile ? "bottom" : "right"} 
-          className={`${isMobile ? "h-[70vh] rounded-t-xl pt-4" : ""} ${isExpanded ? "w-[80vw] max-w-[800px] h-[80vh]" : "w-[380px]"}`}
+          className={`${isMobile ? "h-[70vh] rounded-t-xl pt-4" : ""} ${sizeClasses}`}
         >
           <div className="flex items-center justify-between mb-3">
             <SheetHeader className="text-left p-0 flex items-center">
@@ -155,6 +181,16 @@ const ChatBot = () => {
               <Button 
                 variant="ghost" 
                 size="sm" 
+                className="h-8 w-8 p-0 mr-2" 
+                onClick={toggleFullscreen}
+                title={isFullscreen ? "Quitter le plein écran" : "Plein écran"}
+              >
+                {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+              </Button>
+              
+              <Button 
+                variant="ghost" 
+                size="sm" 
                 className="h-8 w-8 p-0" 
                 onClick={() => setIsOpen(false)}
               >
@@ -165,7 +201,7 @@ const ChatBot = () => {
           
           <Separator className="mb-3" />
           
-          <div className={`flex flex-col ${isExpanded ? "h-[calc(100%-130px)]" : "h-[calc(100%-130px)]"}`}>
+          <div className="flex flex-col h-[calc(100%-130px)]">
             <div className="flex-grow overflow-y-auto mb-4 space-y-4 pr-2 custom-scrollbar">
               {messages.map((message, index) => (
                 <div 
@@ -190,25 +226,38 @@ const ChatBot = () => {
               )}
             </div>
             
-            {/* Suggestions */}
+            {/* Suggestions avec contrôle de visibilité */}
             <div className="mb-3">
-              <div className="flex items-center text-sm text-gray-700 mb-2 font-medium">
-                <Lightbulb size={14} className="mr-1 text-justice-primary" />
-                <span>Suggestions:</span>
+              <div className="flex items-center justify-between text-sm text-gray-700 mb-2 font-medium">
+                <div className="flex items-center">
+                  <Lightbulb size={14} className="mr-1 text-justice-primary" />
+                  <span>Suggestions:</span>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-6 w-6 p-0"
+                  onClick={toggleSuggestions}
+                >
+                  {showSuggestions ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                </Button>
               </div>
-              <div className="flex flex-wrap gap-2 max-h-[100px] overflow-y-auto">
-                {suggestionSets[currentSuggestionSet].map((suggestion, index) => (
-                  <Button
-                    key={index}
-                    variant="outline"
-                    size="sm"
-                    className="text-xs py-1 px-2 h-auto bg-justice-light hover:bg-justice-light/80 text-justice-dark border-justice-primary/30"
-                    onClick={() => handleSuggestionClick(suggestion)}
-                  >
-                    {suggestion}
-                  </Button>
-                ))}
-              </div>
+              
+              {showSuggestions && (
+                <div className="flex flex-wrap gap-2 max-h-[100px] overflow-y-auto">
+                  {suggestionSets[currentSuggestionSet].map((suggestion, index) => (
+                    <Button
+                      key={index}
+                      variant="outline"
+                      size="sm"
+                      className="text-xs py-1 px-2 h-auto bg-justice-light hover:bg-justice-light/80 text-justice-dark border-justice-primary/30"
+                      onClick={() => handleSuggestionClick(suggestion)}
+                    >
+                      {suggestion}
+                    </Button>
+                  ))}
+                </div>
+              )}
             </div>
             
             <form onSubmit={handleSubmit} className="mt-auto">

@@ -27,8 +27,8 @@ const HistoirePage = () => {
       img.onload = () => handleImageLoad(key);
     };
 
-    preloadImage("/images/grece-antique-parthenon.jpg", "grece");
-    preloadImage("/images/louve-romaine.jpg", "rome");
+    preloadImage("/images/parthenon-athenes.jpg", "grece");
+    preloadImage("/images/louve-romaine-capitole.jpg", "rome");
     preloadImage("/images/napoleon-code.jpg", "napoleon");
     preloadImage("/images/constitution-francaise.jpg", "constitution");
   }, []);
@@ -67,7 +67,7 @@ const HistoirePage = () => {
           title="Les origines démocratiques : la Grèce antique" 
           period="VIe - IVe siècle av. J.-C."
           icon={<Scale className="h-8 w-8" />}
-          image="/images/grece-antique-parthenon.jpg"
+          image="/images/parthenon-athenes.jpg"
           isLoaded={imagesLoaded.grece}
           onImageLoad={() => handleImageLoad("grece")}
           fallbackImage="https://images.unsplash.com/photo-1426604966848-d7adac402bff"
@@ -91,7 +91,7 @@ const HistoirePage = () => {
           title="L'héritage romain : les fondements du droit civil" 
           period="450 av. J.-C. - VIe siècle"
           icon={<BookOpen className="h-8 w-8" />}
-          image="/images/louve-romaine.jpg"
+          image="/images/louve-romaine-capitole.jpg"
           isLoaded={imagesLoaded.rome}
           onImageLoad={() => handleImageLoad("rome")}
           fallbackImage="https://images.unsplash.com/photo-1618945524837-32307a05d7bd"
