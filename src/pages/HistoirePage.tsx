@@ -1,4 +1,3 @@
-
 import { Scroll, BookOpen, Scale, Gavel } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useEffect, useState } from "react";
@@ -28,9 +27,9 @@ const HistoirePage = () => {
       img.onload = () => handleImageLoad(key);
     };
 
-    preloadImage("/images/grece-antique.jpg", "grece");
-    preloadImage("/images/droit-romain.jpg", "rome");
-    preloadImage("/images/code-napoleon.jpg", "napoleon");
+    preloadImage("/images/athenes-ancienne.jpg", "grece");
+    preloadImage("/images/louve-romaine.jpg", "rome");
+    preloadImage("/images/napoleon-code.jpg", "napoleon");
     preloadImage("/images/constitution-francaise.jpg", "constitution");
   }, []);
 
@@ -68,7 +67,7 @@ const HistoirePage = () => {
           title="Les origines démocratiques : la Grèce antique" 
           period="VIe - IVe siècle av. J.-C."
           icon={<Scale className="h-8 w-8" />}
-          image="/images/grece-antique.jpg"
+          image="/images/athenes-ancienne.jpg"
           isLoaded={imagesLoaded.grece}
           onImageLoad={() => handleImageLoad("grece")}
           fallbackImage="https://images.unsplash.com/photo-1581092335878-2d9ff86ca2bf"
@@ -92,7 +91,7 @@ const HistoirePage = () => {
           title="L'héritage romain : les fondements du droit civil" 
           period="450 av. J.-C. - VIe siècle"
           icon={<BookOpen className="h-8 w-8" />}
-          image="/images/droit-romain.jpg"
+          image="/images/louve-romaine.jpg"
           isLoaded={imagesLoaded.rome}
           onImageLoad={() => handleImageLoad("rome")}
           fallbackImage="https://images.unsplash.com/photo-1618945524837-32307a05d7bd"
@@ -114,7 +113,7 @@ const HistoirePage = () => {
           title="Le Code Napoléon : la naissance du droit moderne" 
           period="1804-1810"
           icon={<Gavel className="h-8 w-8" />}
-          image="/images/code-napoleon.jpg"
+          image="/images/napoleon-code.jpg"
           isLoaded={imagesLoaded.napoleon}
           onImageLoad={() => handleImageLoad("napoleon")}
           fallbackImage="https://images.unsplash.com/photo-1589391886645-d51941baf7fb"

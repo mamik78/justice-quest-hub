@@ -46,6 +46,20 @@ const ChatBot = () => {
       "Comment contacter un tribunal ?",
       "Quelle différence entre civil et pénal ?",
       "Comment se passe une médiation ?"
+    ],
+    [
+      "Comment lutter contre le harcèlement scolaire ?",
+      "Quelles sont les étapes d'une procédure civile ?",
+      "Comment s'organise la hiérarchie judiciaire ?",
+      "Quelle est l'origine du Code Civil ?",
+      "Comment obtenir un casier judiciaire ?"
+    ],
+    [
+      "Quand et pourquoi a été créé le SAUJ ?",
+      "Comment a évolué le droit français depuis l'Antiquité ?",
+      "Quelles sont les innovations de la justice numérique ?",
+      "Comment déposer une main courante ?",
+      "Qui peut bénéficier de l'aide juridictionnelle ?"
     ]
   ];
   
@@ -110,7 +124,7 @@ const ChatBot = () => {
         </SheetTrigger>
         <SheetContent 
           side={isMobile ? "bottom" : "right"} 
-          className={`${isMobile ? "h-[70vh] rounded-t-xl pt-4" : ""} ${isExpanded ? "w-[600px] max-w-[90vw]" : "w-[380px]"}`}
+          className={`${isMobile ? "h-[70vh] rounded-t-xl pt-4" : ""} ${isExpanded ? "w-[80vw] max-w-[800px] h-[80vh]" : "w-[380px]"}`}
         >
           <div className="flex items-center justify-between mb-3">
             <SheetHeader className="text-left p-0 flex items-center">
@@ -133,6 +147,7 @@ const ChatBot = () => {
                 size="sm" 
                 className="h-8 w-8 p-0 mr-2" 
                 onClick={toggleExpand}
+                title={isExpanded ? "Réduire" : "Agrandir"}
               >
                 {isExpanded ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
               </Button>
@@ -150,7 +165,7 @@ const ChatBot = () => {
           
           <Separator className="mb-3" />
           
-          <div className="flex flex-col h-[calc(100%-130px)]">
+          <div className={`flex flex-col ${isExpanded ? "h-[calc(100%-130px)]" : "h-[calc(100%-130px)]"}`}>
             <div className="flex-grow overflow-y-auto mb-4 space-y-4 pr-2 custom-scrollbar">
               {messages.map((message, index) => (
                 <div 

@@ -25,6 +25,12 @@ export const ProgressHeader = ({
         return "bg-green-600";
       case "Métiers":
         return "bg-amber-600";
+      case "Histoire":
+        return "bg-purple-600";
+      case "Harcèlement":
+        return "bg-red-600";
+      case "Organisation":
+        return "bg-indigo-600";
       default:
         return "bg-justice-primary";
     }

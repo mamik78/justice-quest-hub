@@ -4,6 +4,9 @@ import { QuizQuestion } from './questions/types';
 import { saujQuestions } from './questions/saujQuestions';
 import { justiceQuestions } from './questions/justiceQuestions';
 import { metiersQuestions } from './questions/metiersQuestions';
+import { histoireQuestions } from './questions/histoireQuestions';
+import { harcelementQuestions } from './questions/harcelementQuestions';
+import { organizationQuestions } from './questions/organizationQuestions';
 import { badges } from './badges';
 import { avatars } from './avatars';
 
@@ -11,7 +14,10 @@ import { avatars } from './avatars';
 export const quizQuestions: QuizQuestion[] = [
   ...saujQuestions,
   ...justiceQuestions,
-  ...metiersQuestions
+  ...metiersQuestions,
+  ...histoireQuestions,
+  ...harcelementQuestions,
+  ...organizationQuestions
 ];
 
 // Re-export everything for backward compatibility
