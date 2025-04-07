@@ -27,7 +27,7 @@ const HistoirePage = () => {
       img.onload = () => handleImageLoad(key);
     };
 
-    preloadImage("/images/athenes-ancienne.jpg", "grece");
+    preloadImage("/images/grece-antique-parthenon.jpg", "grece");
     preloadImage("/images/louve-romaine.jpg", "rome");
     preloadImage("/images/napoleon-code.jpg", "napoleon");
     preloadImage("/images/constitution-francaise.jpg", "constitution");
@@ -67,10 +67,10 @@ const HistoirePage = () => {
           title="Les origines démocratiques : la Grèce antique" 
           period="VIe - IVe siècle av. J.-C."
           icon={<Scale className="h-8 w-8" />}
-          image="/images/athenes-ancienne.jpg"
+          image="/images/grece-antique-parthenon.jpg"
           isLoaded={imagesLoaded.grece}
           onImageLoad={() => handleImageLoad("grece")}
-          fallbackImage="https://images.unsplash.com/photo-1581092335878-2d9ff86ca2bf"
+          fallbackImage="https://images.unsplash.com/photo-1426604966848-d7adac402bff"
         >
           <p className="mb-4">
             La démocratie athénienne institue les premiers tribunaux populaires connus sous le nom d'Héliée. 
