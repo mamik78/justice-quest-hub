@@ -141,5 +141,75 @@ export const histoireQuestions: QuizQuestion[] = [
     correct: "C",
     explanation: "Le Service d'Accueil Unique du Justiciable (SAUJ) a été créé par la loi de modernisation de la justice du XXIe siècle promulguée le 18 novembre 2016.",
     source: "Loi du 18 novembre 2016 de modernisation de la justice du XXIe siècle"
+  },
+  {
+    id: 41,
+    category: 'Histoire',
+    question: "Quelle juridiction a été créée en France en 2002 pour remplacer les tribunaux d'instance pour certains litiges du quotidien ?",
+    options: [
+      { key: "A", text: "Le tribunal de commerce" },
+      { key: "B", text: "Le tribunal de proximité" },
+      { key: "C", text: "La juridiction de proximité" },
+      { key: "D", text: "Le tribunal paritaire" }
+    ],
+    correct: "C",
+    explanation: "La juridiction de proximité a été créée en 2002 pour traiter des petits litiges du quotidien, avant d'être remplacée par les tribunaux de proximité en 2017.",
+    source: "Histoire des réformes judiciaires françaises"
+  },
+  {
+    id: 42,
+    category: 'Histoire',
+    question: "Quel célèbre tableau représente Napoléon Bonaparte en tenue de sacre, peint par Jacques-Louis David ?",
+    options: [
+      { key: "A", text: "Le Sacre de Napoléon" },
+      { key: "B", text: "Bonaparte franchissant le Grand-Saint-Bernard" },
+      { key: "C", text: "Napoléon dans son cabinet de travail" },
+      { key: "D", text: "Napoléon sur le champ de bataille d'Eylau" }
+    ],
+    correct: "A",
+    explanation: "Le Sacre de Napoléon est un tableau monumental peint par Jacques-Louis David entre 1805 et 1807, représentant le couronnement de Napoléon Ier à Notre-Dame de Paris.",
+    source: "Histoire de l'art français"
+  },
+  {
+    id: 43,
+    category: 'Histoire',
+    question: "En quelle année les tribunaux de proximité ont-ils été créés en France ?",
+    options: [
+      { key: "A", text: "2002" },
+      { key: "B", text: "2010" },
+      { key: "C", text: "2017" },
+      { key: "D", text: "2021" }
+    ],
+    correct: "D",
+    explanation: "Les tribunaux de proximité ont été créés au 1er janvier 2021 suite à la réforme de la justice, en remplacement des tribunaux d'instance.",
+    source: "Loi du 23 mars 2019 de programmation et de réforme pour la justice"
+  },
+  {
+    id: 44,
+    category: 'Histoire',
+    question: "Quel est le nom du premier code pénal français, promulgué par Napoléon en 1810 ?",
+    options: [
+      { key: "A", text: "Le Code criminel" },
+      { key: "B", text: "Le Code d'instruction criminelle" },
+      { key: "C", text: "Le Code pénal napoléonien" },
+      { key: "D", text: "Le Code des délits et des peines" }
+    ],
+    correct: "C",
+    explanation: "Le Code pénal napoléonien, promulgué en 1810, a servi de base au droit pénal français pendant plus de 180 ans, jusqu'à sa refonte complète en 1994.",
+    source: "Histoire du droit pénal français"
+  },
+  {
+    id: 45,
+    category: 'Histoire',
+    question: "Quelle loi française de 2016 a notamment créé le divorce par consentement mutuel sans juge ?",
+    options: [
+      { key: "A", text: "Loi Taubira" },
+      { key: "B", text: "Loi Macron" },
+      { key: "C", text: "Loi J21" },
+      { key: "D", text: "Loi Belloubet" }
+    ],
+    correct: "C",
+    explanation: "La Loi J21 (Justice du 21e siècle) du 18 novembre 2016 a instauré le divorce par consentement mutuel sans passage devant le juge, par acte sous signature d'avocats.",
+    source: "Loi du 18 novembre 2016 de modernisation de la justice du XXIe siècle"
   }
 ];
