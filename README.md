@@ -1,73 +1,103 @@
-# Welcome to your Lovable project
 
-## Project info
+# C-Justice-SAUJ - Plateforme éducative sur la justice
 
-**URL**: https://lovable.dev/projects/dff5a3b2-466f-45b7-a444-77abafcab7ac
+## À propos du projet
 
-## How can I edit this code?
+**C-Justice-SAUJ** est une plateforme éducative et interactive conçue pour les jeunes de 11 à 15 ans, visant à leur faire découvrir le système judiciaire français de façon ludique et pédagogique. Le site permet aux utilisateurs d'apprendre sur différents aspects de la justice à travers des quiz interactifs, des explications simples, et un assistant virtuel.
 
-There are several ways of editing your application.
+### Objectifs du projet
+- Sensibiliser les jeunes au fonctionnement du système judiciaire
+- Démystifier les institutions et métiers de la justice
+- Fournir des ressources pédagogiques accessibles 
+- Offrir une expérience interactive et engageante
 
-**Use Lovable**
+## Technologies utilisées
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/dff5a3b2-466f-45b7-a444-77abafcab7ac) and start prompting.
+Ce projet est construit avec:
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Vite** - Environnement de développement rapide
+- **TypeScript** - Pour un code robuste et typé
+- **React** - Bibliothèque frontend pour l'interface utilisateur
+- **shadcn-ui** - Composants UI modernes et accessibles
+- **Tailwind CSS** - Framework CSS utilitaire
 
-**Use your preferred IDE**
+## Fonctionnalités principales
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Quiz interactifs** sur différentes thématiques juridiques
+- **Système de badges et récompenses** pour encourager l'apprentissage
+- **Assistant IA** pour répondre aux questions juridiques simples
+- **Section FAQ** contenant des explications adaptées au jeune public
+- **Outil de localisation des services juridiques** à proximité
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Contenu juridique
 
-Follow these steps:
+Le contenu éducatif du site couvre plusieurs domaines:
+- Histoire de la justice
+- Fonctionnement du SAUJ (Service d'Accueil Unique du Justiciable)
+- Organisation judiciaire française
+- Métiers de la justice
+- Prévention du harcèlement
+
+Ces contenus sont conçus par des professionnels du droit et adaptés pour être compréhensibles par le public cible.
+
+## Contact
+
+Pour toute question concernant ce projet, veuillez contacter: tprx-mantes-la-jolie@justice.fr
+
+## Informations sur le déploiement
+
+URL du site: https://lovable.dev/projects/dff5a3b2-466f-45b7-a444-77abafcab7ac
+
+---
+
+# Guide de développement (pour les développeurs)
+
+## Comment éditer ce code?
+
+Il existe plusieurs façons de modifier cette application.
+
+**Utiliser Lovable**
+
+Rendez-vous simplement sur le [Projet Lovable](https://lovable.dev/projects/dff5a3b2-466f-45b7-a444-77abafcab7ac) et commencez à faire des requêtes.
+
+Les modifications effectuées via Lovable seront automatiquement enregistrées dans ce dépôt.
+
+**Utiliser votre IDE préféré**
+
+Si vous souhaitez travailler localement en utilisant votre propre IDE, vous pouvez cloner ce dépôt et pousser les modifications. Les modifications poussées seront également reflétées dans Lovable.
+
+La seule exigence est d'avoir Node.js et npm installés - [installer avec nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+Suivez ces étapes :
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Étape 1 : Cloner le dépôt en utilisant l'URL Git du projet.
+git clone <VOTRE_URL_GIT>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Étape 2 : Naviguer vers le répertoire du projet.
+cd <NOM_DE_VOTRE_PROJET>
 
-# Step 3: Install the necessary dependencies.
+# Étape 3 : Installer les dépendances nécessaires.
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Étape 4 : Démarrer le serveur de développement avec rechargement automatique et aperçu instantané.
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+**Éditer un fichier directement dans GitHub**
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- Naviguez vers le(s) fichier(s) souhaité(s).
+- Cliquez sur le bouton "Modifier" (icône de crayon) en haut à droite de la vue du fichier.
+- Effectuez vos modifications et validez-les.
 
-**Use GitHub Codespaces**
+**Utiliser GitHub Codespaces**
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- Accédez à la page principale de votre dépôt.
+- Cliquez sur le bouton "Code" (bouton vert) près du coin supérieur droit.
+- Sélectionnez l'onglet "Codespaces".
+- Cliquez sur "New codespace" pour lancer un nouvel environnement Codespace.
+- Modifiez les fichiers directement dans l'environnement Codespace et validez et poussez vos modifications une fois que vous avez terminé.
 
-## What technologies are used for this project?
+## Comment déployer ce projet?
 
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/dff5a3b2-466f-45b7-a444-77abafcab7ac) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes it is!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Ouvrez simplement [Lovable](https://lovable.dev/projects/dff5a3b2-466f-45b7-a444-77abafcab7ac) et cliquez sur Partager -> Publier.

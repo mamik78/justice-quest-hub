@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { MapPin, Phone, Globe, Mail } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { toast } from 'sonner';
 
@@ -15,6 +14,8 @@ const ServiceJuridictionFinder = () => {
   const [results, setResults] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [nom, setNom] = useState('');
+  const [prenom, setPrenom] = useState('');
 
   // Simuler l'API pour les suggestions de villes
   useEffect(() => {
@@ -72,9 +73,15 @@ const ServiceJuridictionFinder = () => {
     }
   };
 
-  const sendEmail = () => {
+  const sendEmail = (type: string) => {
+    // Vérification des champs nom et prénom
+    if (!nom.trim() || !prenom.trim()) {
+      toast.error("Veuillez saisir votre nom et prénom avant d'envoyer une demande");
+      return;
+    }
+    
     // Dans une vraie application, ceci serait géré par un service d'email
-    toast.success("Demande envoyée à tprx-mantes-la-jolie@justice.fr");
+    toast.success(`Demande de ${type} envoyée à tprx-mantes-la-jolie@justice.fr au nom de ${prenom} ${nom}`);
   };
 
   const findServices = async () => {
@@ -124,13 +131,6 @@ const ServiceJuridictionFinder = () => {
             phone: "01.00.00.00.02",
             website: "https://www.cdad-" + codePostal.substring(0, 2) + ".justice.fr",
             email: ville === "Mantes-la-Jolie" ? "tprx-mantes-la-jolie@justice.fr" : "cdad@justice.fr"
-          },
-          mfs: {
-            name: "Maison France Services",
-            address: "3 place de la République, " + codePostal + " " + ville,
-            phone: "01.00.00.00.03",
-            website: "https://www.france-services.gouv.fr",
-            email: "contact@france-services.gouv.fr"
           }
         };
 
@@ -151,57 +151,71 @@ const ServiceJuridictionFinder = () => {
       </CardHeader>
       
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Code postal</label>
-            <Input 
-              type="text" 
-              value={codePostal}
-              onChange={(e) => setCodePostal(e.target.value)}
-              placeholder="Ex: 75001"
-              maxLength={5}
-              className="w-full"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Ville</label>
-            <select 
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-              value={ville}
-              onChange={(e) => setVille(e.target.value)}
-              disabled={suggestions.length === 0}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Code postal</label>
+              <Input 
+                type="text" 
+                value={codePostal}
+                onChange={(e) => setCodePostal(e.target.value)}
+                placeholder="Ex: 75001"
+                maxLength={5}
+                className="w-full"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Ville</label>
+              <select 
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                value={ville}
+                onChange={(e) => setVille(e.target.value)}
+                disabled={suggestions.length === 0}
+              >
+                <option value="">Sélectionnez une ville</option>
+                {suggestions.map((city, index) => (
+                  <option key={index} value={city.nom}>{city.nom}</option>
+                ))}
+              </select>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Service recherché</label>
+              <select 
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                value={selectedService}
+                onChange={(e) => setSelectedService(e.target.value)}
+              >
+                <option value="tribunal">Tribunal</option>
+                <option value="conciliateur">Conciliateur de justice</option>
+                <option value="police">Police/Gendarmerie</option>
+                <option value="cdad">Point d'accès au droit (CDAD)</option>
+              </select>
+            </div>
+
+            <Button 
+              className="bg-justice-primary hover:bg-justice-dark"
+              onClick={findServices}
+              disabled={loading}
             >
-              <option value="">Sélectionnez une ville</option>
-              {suggestions.map((city, index) => (
-                <option key={index} value={city.nom}>{city.nom}</option>
-              ))}
-            </select>
+              {loading ? 'Recherche en cours...' : 'Rechercher'}
+            </Button>
           </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Service recherché</label>
-            <select 
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-              value={selectedService}
-              onChange={(e) => setSelectedService(e.target.value)}
-            >
-              <option value="tribunal">Tribunal</option>
-              <option value="conciliateur">Conciliateur de justice</option>
-              <option value="police">Police/Gendarmerie</option>
-              <option value="cdad">Point d'accès au droit (CDAD)</option>
-              <option value="mfs">Maison France Services</option>
-            </select>
+
+          <div className="bg-gray-50 p-4 rounded-md border border-gray-200">
+            <h3 className="font-medium mb-4 text-justice-primary">Comment ça marche ?</h3>
+            <ol className="list-decimal list-inside space-y-2 text-sm text-gray-600">
+              <li>Saisissez votre code postal</li>
+              <li>Sélectionnez votre ville</li>
+              <li>Choisissez le type de service juridique que vous recherchez</li>
+              <li>Cliquez sur "Rechercher" pour afficher les informations du service</li>
+            </ol>
+            <div className="mt-4">
+              <p className="text-sm text-gray-600">Ce service vous permet de trouver les coordonnées des institutions juridiques et d'accès au droit les plus proches de chez vous.</p>
+            </div>
           </div>
         </div>
-        
-        <Button 
-          className="bg-justice-primary hover:bg-justice-dark mx-auto block"
-          onClick={findServices}
-          disabled={loading}
-        >
-          {loading ? 'Recherche en cours...' : 'Rechercher'}
-        </Button>
         
         {error && (
           <div className="p-4 bg-red-100 text-red-700 rounded-md my-4">
@@ -210,45 +224,74 @@ const ServiceJuridictionFinder = () => {
         )}
         
         {results && (
-          <div className="mt-6 p-4 border border-gray-200 rounded-lg">
-            <h2 className="text-xl font-semibold mb-4">{results[selectedService].name}</h2>
-            
-            <div className="space-y-3">
-              <div className="flex items-start">
-                <MapPin className="h-5 w-5 text-justice-primary mr-3 mt-0.5" />
-                <span>{results[selectedService].address}</span>
-              </div>
+          <div className="mt-6">
+            <div className="p-6 border border-gray-200 rounded-lg bg-white">
+              <h2 className="text-xl font-semibold mb-4 flex items-center">
+                <MapPin className="h-5 w-5 text-justice-primary mr-2" />
+                {results[selectedService].name}
+              </h2>
               
-              <div className="flex items-center">
-                <Phone className="h-5 w-5 text-justice-primary mr-3" />
-                <span>{results[selectedService].phone}</span>
-              </div>
-              
-              <div className="flex items-center">
-                <Globe className="h-5 w-5 text-justice-primary mr-3" />
-                <a href={results[selectedService].website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                  {results[selectedService].website}
-                </a>
-              </div>
-              
-              <div className="flex items-center">
-                <Mail className="h-5 w-5 text-justice-primary mr-3" />
-                <span>{results[selectedService].email}</span>
-              </div>
-            </div>
-            
-            <div className="mt-6">
-              <h3 className="font-medium mb-2">Poser une question :</h3>
-              <div className="flex flex-wrap gap-2">
-                <Button onClick={sendEmail} variant="outline" className="text-sm">
-                  Demande d'information
-                </Button>
-                <Button onClick={sendEmail} variant="outline" className="text-sm">
-                  Prise de rendez-vous
-                </Button>
-                <Button onClick={sendEmail} variant="outline" className="text-sm">
-                  Signaler un problème
-                </Button>
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <MapPin className="h-5 w-5 text-justice-primary mr-3 mt-0.5 flex-shrink-0" />
+                  <span>{results[selectedService].address}</span>
+                </div>
+                
+                <div className="flex items-center">
+                  <Phone className="h-5 w-5 text-justice-primary mr-3 flex-shrink-0" />
+                  <span>{results[selectedService].phone}</span>
+                </div>
+                
+                <div className="flex items-center">
+                  <Globe className="h-5 w-5 text-justice-primary mr-3 flex-shrink-0" />
+                  <a href={results[selectedService].website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                    {results[selectedService].website}
+                  </a>
+                </div>
+                
+                <div className="flex items-center">
+                  <Mail className="h-5 w-5 text-justice-primary mr-3 flex-shrink-0" />
+                  <span>{results[selectedService].email}</span>
+                </div>
+
+                <div className="border-t border-gray-200 pt-4 mt-4">
+                  <h3 className="font-medium mb-4">Vos informations pour la demande</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Prénom</label>
+                      <Input
+                        type="text"
+                        value={prenom}
+                        onChange={(e) => setPrenom(e.target.value)}
+                        placeholder="Votre prénom"
+                        className="w-full"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Nom</label>
+                      <Input
+                        type="text"
+                        value={nom}
+                        onChange={(e) => setNom(e.target.value)}
+                        placeholder="Votre nom"
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+
+                  <h3 className="font-medium mb-3">Contacter ce service :</h3>
+                  <div className="flex flex-wrap gap-2">
+                    <Button onClick={() => sendEmail('demande d\'information')} variant="outline" className="text-sm">
+                      Demande d'information
+                    </Button>
+                    <Button onClick={() => sendEmail('prise de rendez-vous')} variant="outline" className="text-sm">
+                      Prise de rendez-vous
+                    </Button>
+                    <Button onClick={() => sendEmail('signalement')} variant="outline" className="text-sm">
+                      Signaler un problème
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

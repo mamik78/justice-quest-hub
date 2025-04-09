@@ -1,5 +1,7 @@
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { HelpCircle, BookOpen, Scale, Gavel, Landmark, Vote } from "lucide-react";
+import { HelpCircle, BookOpen, Scale, Gavel, Landmark, Vote, FileText } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const FAQPage = () => {
   return (
@@ -8,7 +10,7 @@ const FAQPage = () => {
         <div className="bg-gradient-to-r from-justice-primary to-justice-dark p-6 text-white">
           <div className="flex items-center gap-2">
             <HelpCircle className="h-6 w-6" />
-            <h1 className="text-2xl font-bold">Questions & Réponses Juridiques</h1>
+            <h1 className="text-2xl font-bold">Questions & Informations Juridiques</h1>
           </div>
           <p className="text-justice-light mt-2">
             Comprendre les concepts juridiques essentiels
@@ -16,55 +18,133 @@ const FAQPage = () => {
         </div>
         
         <div className="p-6">
-          <p className="text-gray-700 mb-6">
-            Cette page regroupe des explications simples sur les concepts fondamentaux du droit français
-            et les acteurs du système judiciaire. Pour toute question complémentaire, n'hésitez pas à
-            utiliser notre assistant juridique.
-          </p>
-          
-          <div className="space-y-8">
-            {faqSections.map((section) => (
-              <div key={section.title} className="bg-justice-gray rounded-lg p-6">
+          <Tabs defaultValue="faq" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="faq">FAQ</TabsTrigger>
+              <TabsTrigger value="legal">Mentions Légales</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="faq">
+              <p className="text-gray-700 mb-6">
+                Cette page regroupe des explications simples sur les concepts fondamentaux du droit français
+                et les acteurs du système judiciaire. Pour toute question complémentaire, n'hésitez pas à
+                utiliser notre assistant juridique.
+              </p>
+              
+              <div className="space-y-8">
+                {faqSections.map((section) => (
+                  <div key={section.title} className="bg-justice-gray rounded-lg p-6">
+                    <div className="flex items-center gap-2 mb-4">
+                      <section.icon className="h-5 w-5 text-justice-primary" />
+                      <h2 className="text-xl font-bold text-justice-primary">{section.title}</h2>
+                    </div>
+                    
+                    <Accordion type="single" collapsible className="w-full">
+                      {section.questions.map((item, index) => (
+                        <AccordionItem key={index} value={`item-${section.title}-${index}`}>
+                          <AccordionTrigger className="text-left font-medium">
+                            {item.question}
+                          </AccordionTrigger>
+                          <AccordionContent className="text-gray-700">
+                            {item.answer}
+                          </AccordionContent>
+                        </AccordionItem>
+                      ))}
+                    </Accordion>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="bg-white rounded-xl shadow-sm p-6 mt-8">
+                <h2 className="text-xl font-bold mb-4">Vous ne trouvez pas votre réponse ?</h2>
+                <p className="mb-4">
+                  Notre assistant juridique est disponible pour répondre à toutes vos questions spécifiques.
+                  Cliquez simplement sur l'icône de chat en bas à droite de votre écran.
+                </p>
+                <div className="flex justify-center">
+                  <button 
+                    onClick={() => {
+                      // Open chatbot logic could be implemented here
+                      const event = new CustomEvent('open-chatbot');
+                      window.dispatchEvent(event);
+                    }}
+                    className="btn-primary"
+                  >
+                    Consulter l'assistant
+                  </button>
+                </div>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="legal">
+              <div className="bg-justice-gray rounded-lg p-6">
                 <div className="flex items-center gap-2 mb-4">
-                  <section.icon className="h-5 w-5 text-justice-primary" />
-                  <h2 className="text-xl font-bold text-justice-primary">{section.title}</h2>
+                  <FileText className="h-5 w-5 text-justice-primary" />
+                  <h2 className="text-xl font-bold text-justice-primary">Mentions Légales</h2>
                 </div>
                 
-                <Accordion type="single" collapsible className="w-full">
-                  {section.questions.map((item, index) => (
-                    <AccordionItem key={index} value={`item-${section.title}-${index}`}>
-                      <AccordionTrigger className="text-left font-medium">
-                        {item.question}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-gray-700">
-                        {item.answer}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="font-semibold text-lg mb-2">Éditeur du site</h3>
+                    <p className="text-gray-700">
+                      Le site C-Justice-SAUJ est édité par le Service d'Accueil Unique du Justiciable
+                      du Tribunal Judiciaire de Mantes-la-Jolie, organisme public.
+                    </p>
+                    <p className="text-gray-700 mt-2">
+                      Adresse : 20 avenue de la République, 78200 Mantes-la-Jolie<br />
+                      Téléphone : 01.30.98.10.10<br />
+                      Email : tprx-mantes-la-jolie@justice.fr
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-semibold text-lg mb-2">Directeur de publication</h3>
+                    <p className="text-gray-700">
+                      Direction des services judiciaires du ministère de la Justice
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-semibold text-lg mb-2">Hébergement</h3>
+                    <p className="text-gray-700">
+                      Ce site est hébergé par Lovable.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-semibold text-lg mb-2">Protection des données personnelles</h3>
+                    <p className="text-gray-700">
+                      Les informations collectées via les formulaires sont destinées uniquement à
+                      faciliter la prise de contact avec les services judiciaires appropriés.
+                      Conformément à la loi "Informatique et Libertés" et au RGPD, vous disposez d'un droit
+                      d'accès, de rectification, et de suppression de vos données.
+                    </p>
+                    <p className="text-gray-700 mt-2">
+                      Pour exercer ces droits, vous pouvez contacter : tprx-mantes-la-jolie@justice.fr
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-semibold text-lg mb-2">Propriété intellectuelle</h3>
+                    <p className="text-gray-700">
+                      L'ensemble du contenu de ce site (textes, images, vidéos, etc.) est protégé par le
+                      droit d'auteur. Toute reproduction ou représentation totale ou partielle de ce site
+                      par quelque procédé que ce soit, sans autorisation expresse, est interdite.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-semibold text-lg mb-2">Cookies</h3>
+                    <p className="text-gray-700">
+                      Ce site utilise des cookies techniques nécessaires à son bon fonctionnement.
+                      Ces cookies ne collectent pas de données à des fins publicitaires ou de suivi
+                      comportemental.
+                    </p>
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      
-      <div className="bg-white rounded-xl shadow-md p-6 mb-8 animate-fade-in">
-        <h2 className="text-xl font-bold mb-4">Vous ne trouvez pas votre réponse ?</h2>
-        <p className="mb-4">
-          Notre assistant juridique est disponible pour répondre à toutes vos questions spécifiques.
-          Cliquez simplement sur l'icône de chat en bas à droite de votre écran.
-        </p>
-        <div className="flex justify-center">
-          <button 
-            onClick={() => {
-              // Open chatbot logic could be implemented here
-              const event = new CustomEvent('open-chatbot');
-              window.dispatchEvent(event);
-            }}
-            className="btn-primary"
-          >
-            Consulter l'assistant
-          </button>
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </div>
